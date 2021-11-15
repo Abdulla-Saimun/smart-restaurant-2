@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.__dashboard_container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.__navbar {
+  min-height: 60px;
+}
+.__sidebar_body_wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.__sidebar_container {
+  width: 300px;
+  height: 100%;
+  background-color: #e9ecef;
+}
+.__dashboard_body {
+  flex: 1;
+  height: 100%;
+}

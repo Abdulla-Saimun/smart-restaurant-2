@@ -1,0 +1,51 @@
+{% extends 'base/index.html' %} {% block content %}
+<div class="__dashboard_container">
+  <div class="__navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Welcome back, Saimun</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarColor01"
+          aria-controls="navbarColor01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarColor01"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div class="__sidebar_body_wrapper">
+    <div class="__sidebar_container">
+      <div class="list-group">
+        <a
+          href="#"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          Foods
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">Order</a>
+      </div>
+    </div>
+    <div class="__dashboard_body"></div>
+  </div>
+</div>
+{% endblock %}
