@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'customer.apps.CustomerConfig',
     'chef.apps.ChefConfig',
     'manager.apps.ManagerConfig',
-    'food.apps.FoodConfig'
+    'food.apps.FoodConfig',
+    'crispy_forms',
 
 ]
 
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/dhaka'
 
 USE_I18N = True
 

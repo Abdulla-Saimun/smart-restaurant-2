@@ -10,7 +10,11 @@ class manager_account(models.Model):
     man_phone = models.CharField(max_length=11, blank=False, null=False)
 
     def __str__(self):
+<<<<<<< HEAD
+        return '{} and {}'.format(self.man_fullname, self.man_userid)
+=======
         return '{} and {}'.format(self.man_userid, self.man_phone)
+>>>>>>> b858f5f84ea0c3b32b0e17ac3cb3d8bcf004551e
     
 
 
