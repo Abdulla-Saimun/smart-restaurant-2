@@ -2,6 +2,9 @@ body {
   margin: 0;
   padding: 0;
 }
+p {
+  margin-bottom: 0 !important;
+}
 .__dashboard_container {
   width: 100vw;
   height: 100vh;
@@ -25,4 +28,10 @@ body {
 .__dashboard_body {
   flex: 1;
   height: 100%;
+}
+.__foods__container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
