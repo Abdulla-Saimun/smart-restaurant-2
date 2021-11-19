@@ -8,6 +8,7 @@ class food_item(models.Model):
     food_title = models.CharField(max_length=150)
     food_description = models.CharField(max_length=250,blank=True)
     food_price = models.FloatField()
+    food_category = models.CharField(blank=False, null=False, max_length=100)
     serving_quantity = models.IntegerField(default=1)
     image = models.ImageField(default='default.png', upload_to='images/')
     created_by = models.ForeignKey(manager_account, on_delete=models.CASCADE)

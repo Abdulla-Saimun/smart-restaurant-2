@@ -13,6 +13,7 @@ def manager_registration(request):
         form = manager_account_form(request.POST, request.FILES)        
         if form.is_valid():
             form.save()
+            form = manager_account_form()
             context.update({
                 'message': 'Registration is successful',
                 'msgtype': 'successful'
