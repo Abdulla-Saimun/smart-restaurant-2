@@ -9,6 +9,10 @@ class manager_account(models.Model):
     man_email = models.CharField(max_length=100, blank=False, null=False)
     man_pass = models.CharField(max_length=50, blank=False, null=False)
     man_phone = models.CharField(max_length=11, blank=False, null=False)
+    
+    def save(self, *args, **kwargs):
+        self.man_pass = make_password(self.man_pass)
+        super(manager_account, self).save(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         self.man_pass = make_password(self.man_pass)
