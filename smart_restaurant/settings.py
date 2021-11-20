@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'food.apps.FoodConfig',
     'crispy_forms',
 
+
 ]
 
 MIDDLEWARE = [
@@ -128,8 +129,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'asset')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+# save photo from database and save it in Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

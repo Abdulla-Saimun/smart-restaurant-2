@@ -1,35 +1,45 @@
-{% extends 'base/index.html' %} {% load crispy_forms_tags %} {% block content %}
-<div class="container mt-3">
-  <div class="usersignupform p-3">
-    <h4 class="d-inline-block">Manager Registration</h4>
-    <span class="mt-1 float-right badge mt-1 badge-info">CSMS</span>
-    <div class="bg-info mb-3" style="padding: 0.5px"></div>
-    <div id="">
-      <form
-        action="{% url 'mansignup' %}"
-        method="POST"
-        enctype="multipart/form-data"
-      >
-        {% csrf_token %} {{ regForm | crispy }}
-        <input
-          type="submit"
-          class="btn btn-outline-success btn-sm float-right"
-          value="Register"
-        />
-      </form>
-      <span
-        ><a href="#" style="font-size: 13px; color: red" ,
-          >Back to login</a
-        ></span
-      >
-      <div class="mt-3">
-        {% if message %} {% if msgtype == "successful" %}
-        <p class="alert alert-warning" id="alert-style">{{ message }}</p>
-        {% else %}
-        <p class="alert alert-danger" id="alert-style">{{message}}</p>
-        {% endif %} {% endif %}
-      </div>
+{% extends 'base/index.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<html>
+<head>
+    <style>
+        .usersignupform{
+            margin: auto;
+            width: 50%;
+            border: 3px solid green;
+            padding: 10px;
+
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+    <div class="usersignupform p-3" id="design">
+        <h4 class="d-inline-block">Manager Registration</h4>
+        <div class="bg-info mb-3" style="padding: 0.5px;"></div>
+        <div id="">
+            <form action="{% url 'mansignup' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ regForm | crispy }}
+                <input type="submit" class="btn btn-outline-success btn-sm float-right" value="Register">
+            </form>
+            <span><a href="#" class="text-secondary" style="font-size:13px">Back to login</a></span>
+            <div class="mt-3">
+                {% if message %}
+                {% if msgtype == "successful" %}
+                <p class="alert alert-warning" id="alert-style">{{ message }}</p>
+                {% else %}
+                <p class="alert alert-danger" id="alert-style">Try Again{{ message }}</p>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+</body>
+</html>
+
 {% endblock %}

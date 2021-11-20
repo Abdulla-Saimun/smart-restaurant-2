@@ -29,6 +29,10 @@ p {
   flex: 1;
   height: 100%;
 }
+#design{
+  width: 300px !important;
+  background-color: #6fd5d5;
+}
 .__foods__container {
   width: 100%;
   padding: 10px;
