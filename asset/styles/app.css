@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+p {
+  margin-bottom: 0 !important;
+}
+.__dashboard_container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.__navbar {
+  min-height: 60px;
+}
+.__sidebar_body_wrapper {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.__sidebar_container {
+  width: 300px;
+  height: 100%;
+  background-color: #e9ecef;
+}
+.__dashboard_body {
+  flex: 1;
+  height: 100%;
+}
+#design{
+  width: 300px !important;
+  background-color: #6fd5d5;
+}
+.__foods__container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}

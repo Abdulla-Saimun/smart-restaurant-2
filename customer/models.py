@@ -1,4 +1,6 @@
-from django.db import models
+'''from django.db import models
+from django.contrib.auth.hashers import make_password
+
 
 # Create your models here.
 class customer_account(models.Model):
@@ -15,5 +17,10 @@ class customer_account(models.Model):
     cus_phone = models.CharField(max_length=11, blank=False, null=False)
     cus_address = models.CharField(max_length=100, blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        self.cus_pass = make_password(self.cus_pass)
+        super(customer_account, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.cus_userid
+'''

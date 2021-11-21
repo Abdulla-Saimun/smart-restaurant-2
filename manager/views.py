@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .forms import manager_account_form
+
+
 # Create your views here.
 
 def manager_registration(request):
@@ -10,7 +12,7 @@ def manager_registration(request):
         'message': ''
     }
     if request.method == 'POST':
-        form = manager_account_form(request.POST, request.FILES)        
+        form = manager_account_form(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             form = manager_account_form()
@@ -23,5 +25,5 @@ def manager_registration(request):
                 'message': 'Try Again',
                 'msgtype': 'failed'
             })
-   
+
     return render(request, 'manager/signup.html', context)
