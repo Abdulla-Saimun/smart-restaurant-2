@@ -49,6 +49,9 @@ def logout_view(request):
     return redirect('/')
 
 
+def explore(request):
+    return render(request, 'customer/explorefood.html', {})
+
 # return redirect('/')
 '''def registration(request):
     form = customer_account_form()

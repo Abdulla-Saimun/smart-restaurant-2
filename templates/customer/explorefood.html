@@ -1,0 +1,28 @@
+{% extends 'customer/cusbase.html' %}
+{% block content %}
+{% load static %}
+ <!--  https://picsumphotos/200. -->
+        {% for item in items %}
+        <!-- food card -->
+        <div class="card m-2" style="width: 18rem">
+          <img
+            class="card-img-top"
+            src="{{item.image.url}}"
+            alt="Card image cap"
+          />
+          <div class="card-body">
+            <h5 class="card-title" style="color:green">{{item.food_title}}</h5>
+            <p class="card-text py-1">
+              {{item.food_description}}
+            </p>
+            <div class="d-flex align-items-center justify-content-between">
+              <p class="text-lg font-weight-bold">BDT {{item.food_price}}</p>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-sm btn-primary mx-2">Add to Cart</button>
+                <button class="btn btn-sm btn-outline-warning">View</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  {% endfor %}
+{% endblock %}
