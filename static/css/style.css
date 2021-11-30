@@ -227,7 +227,7 @@ p {
 }
 
 .about-section {
-  background: var(--black-color);
+  background: #f7a300;;
 }
 .about-section .card,
 .about-section .card img {
@@ -378,4 +378,14 @@ p {
   border-color: var(--primary-color);
 }
 
+#design{
+  width: 300px !important;
+  background-color: #6fd5d5;
+}
+.__foods__container {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
 

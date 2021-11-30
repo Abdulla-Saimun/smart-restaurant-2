@@ -14,6 +14,11 @@ class manager_account_form(forms.ModelForm):
             'man_userid',
             'man_fullname',
             'man_email',
-            'man_pass',
-            'man_phone'
+            'man_phone',
+            'man_pass'
         ]
+
+
+class manager_login_raw_form(forms.Form):
+    man_userid = forms.CharField()
+    man_pass = forms.CharField(widget=forms.PasswordInput())
