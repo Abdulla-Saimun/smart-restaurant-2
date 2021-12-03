@@ -96,8 +96,13 @@ def manager_logout(request):
 def order_foods(request):
     return render(request, 'manager/order.html')
 
+
 def manager_overview(request):
-    return render(request, 'manager/manager_dashboard.html')
+    query_quantity = food_item.objects.all().count()
+    context = {
+        'total_item': query_quantity
+    }
+    return render(request, 'manager/manager_dashboard.html', context)
 
 
 '''def manager_login(request):

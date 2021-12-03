@@ -1,10 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 # from .models import customer_account
 # from .forms import customer_account_form, customer_login_form
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
 from .forms import NewUSerForm
+from food.models import food_item
 from django.contrib.auth.hashers import check_password
+from django.views.generic import (
+DetailView
+)
 
 
 def customer_dashboard(request):
@@ -52,7 +56,26 @@ def logout_view(request):
 def explore(request):
     return render(request, 'customer/explorefood.html', {})
 
+
 # return redirect('/')
+
+def menu_list(request):
+    list_query = food_item.objects.all()
+    print(list_query)
+    context = {
+        'items': list_query
+    }
+    return render(request, 'customer/explorefood.html', context)
+
+
+class CusFoodDetailView(DetailView):
+    template_name = 'customer/customer_foodview.html'
+
+    def get_object(self, queryset=None):
+        id_ = self.kwargs.get('id')
+        return get_object_or_404(food_item, id=id_)
+
+
 '''def registration(request):
     form = customer_account_form()
     context = {

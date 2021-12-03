@@ -2,7 +2,8 @@ from django.db import models
 from manager.models import manager_account
 from smart_restaurant.settings import TIME_ZONE
 from django.utils import timezone
-
+from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 class food_item(models.Model):
@@ -27,3 +28,8 @@ class food_item(models.Model):
 
     def __str__(self):
         return self.food_title
+
+    def get_absolute_url(self):
+        return reverse('food:food-detail', kwargs={'id': self.id})
+
+
