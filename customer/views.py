@@ -7,8 +7,15 @@ from .forms import NewUSerForm
 from food.models import food_item
 from django.contrib.auth.hashers import check_password
 from django.views.generic import (
-DetailView
+    DetailView,
+    DeleteView
 )
+from .models import CartItems
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.db.models import Sum
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.urls import reverse
 
 
 def customer_dashboard(request):
@@ -74,6 +81,53 @@ class CusFoodDetailView(DetailView):
     def get_object(self, queryset=None):
         id_ = self.kwargs.get('id')
         return get_object_or_404(food_item, id=id_)
+
+
+@login_required
+def add_to_cart(request, pk):
+    item = get_object_or_404(food_item, pk=pk)
+    cart_item = CartItems.objects.create(
+        item=item,
+        user=request.user,
+        ordered=False,
+    )
+    messages.info(request, "Added to Cart!!Continue Shopping!!")
+    return reverse("customer:cart")
+
+
+@login_required
+def get_cart_items(request):
+    cart_items = CartItems.objects.filter(user=request.user,ordered=False)
+    total_item = cart_items.count()
+    bill = cart_items.aggregate(Sum('item__food_price'))
+    number = cart_items.aggregate(Sum('quantity'))
+    print(number)
+    print(bill)
+    pieces = cart_items.aggregate(Sum('item__serving_quantity'))
+    print(pieces)
+    total = bill.get("item__food_price__sum")
+    print(total)
+    count = number.get("quantity__sum")
+    total_pieces = pieces.get("item__serving_quantity__sum")
+    context = {
+        'cart_items': cart_items,
+        'total': total,
+        'count': count,
+        'total_pieces': total_pieces,
+        'total_item': total_item
+    }
+    return render(request, 'customer/cart.html', context)
+
+
+class CartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = CartItems
+    success_url = '/cart'
+
+    def test_func(self):
+        cart = self.get_object()
+        if self.request.user == cart.user:
+            return True
+        return False
 
 
 '''def registration(request):

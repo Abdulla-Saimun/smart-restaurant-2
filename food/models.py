@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+
 # Create your models here.
 class food_item(models.Model):
     food_cate = [
@@ -31,5 +32,11 @@ class food_item(models.Model):
 
     def get_absolute_url(self):
         return reverse('food:food-detail', kwargs={'id': self.id})
+
+    def get_add_to_cart_url(self):
+        return reverse("customer:add-to-cart", kwargs={
+            'pk': self.pk
+        })
+
 
 

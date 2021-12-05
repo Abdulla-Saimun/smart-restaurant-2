@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-#from .models import customer_account
+from .models import CartItems
 # Register your models here.
 
-#admin.site.register(User)
+admin.site.register(CartItems)

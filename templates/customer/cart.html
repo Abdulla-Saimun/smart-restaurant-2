@@ -1,0 +1,48 @@
+
+<div class="cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 mt-5">
+                <h3 class="text-center">Your Cart</h3>
+                {% if cart_items %}
+                <div class="table-responsive">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Specification</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Total Pieces</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart in cart_items %}
+                        <tr>
+                            <td>{{ cart.item.food_title }} <span class="badge badge-{{ cart.item.label_colour }}">{{ cart.item.labels }}</span></td>
+                            <td>{{ cart.item.food_catagory }}</td>
+                            <td>{{ cart.item.food_price }}</td>
+                            <td>{{ cart.item.serving_quantity }} pieces</td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 class="text-center">Sorry, your cart is empty..Please add items!!!</h4>
+                {% endif %}
+            </div>
+            <div class="col-sm-3 mt-5 mb-3">
+                <div class="content-section">
+                    <h3 class="text-center">Order Summary</h3>
+                      <ul class="list-group">
+                             <li class="list-group-item list-group-item-light text-center text-dark">Total: {{ total }}</li>
+                             <li class="list-group-item list-group-item-light text-center text-dark">Total Items: {{ total_item }}</li>
+                             <li class="list-group-item list-group-item-light text-center text-dark">Total Pieces Quantity: {{ total_pieces }}</li>
+                             <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
+                      </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
