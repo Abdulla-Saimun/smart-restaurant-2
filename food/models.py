@@ -35,7 +35,7 @@ class food_item(models.Model):
 
     def get_add_to_cart_url(self):
         return reverse("customer:add-to-cart", kwargs={
-            'pk': self.pk
+            'id': self.id
         })
 
 

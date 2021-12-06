@@ -9,6 +9,7 @@ from food.models import food_item
 class CartItems(models.Model):
     ORDER_STATUS = (
         ('Active', 'Active'),
+        ('Processing', 'Processing'),
         ('Delivered', 'Delivered')
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)

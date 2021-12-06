@@ -14,6 +14,7 @@
                             <th scope="col">Price</th>
                             <th scope="col">Total Pieces</th>
                             <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -23,6 +24,7 @@
                             <td>{{ cart.item.food_catagory }}</td>
                             <td>{{ cart.item.food_price }}</td>
                             <td>{{ cart.item.serving_quantity }} pieces</td>
+                            <td><a class="btn-sm app-btn-secondary" href="{% url 'customer:remove-from-cart' cart.pk %}">Delete</a></td>
                         </tr>
                             {% endfor %}
                         </tbody>
@@ -39,7 +41,8 @@
                              <li class="list-group-item list-group-item-light text-center text-dark">Total: {{ total }}</li>
                              <li class="list-group-item list-group-item-light text-center text-dark">Total Items: {{ total_item }}</li>
                              <li class="list-group-item list-group-item-light text-center text-dark">Total Pieces Quantity: {{ total_pieces }}</li>
-                             <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="/">Continue Buying✌️</a></li>
+                             <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="#">Confirm Order</a></li>
+                             <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="{% url 'customer:explore' %}">Continue Buying</a></li>
                       </ul>
                 </div>
             </div>

@@ -1,19 +1,10 @@
-{% extends 'base/index.html' %}
+{% extends 'manager/authentication_base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 
 <html>
 <head>
-    <style>
-        .usersignupform{
-            margin: auto;
-            width: 50%;
-            border: 3px solid green;
-            padding: 10px;
 
-
-        }
-    </style>
 </head>
 <body>
     <div class="container mt-3">
@@ -21,12 +12,12 @@
         <h4 class="d-inline-block">Customer Registration</h4>
         <div class="bg-info mb-3" style="padding: 0.5px;"></div>
         <div id="">
-            <form class="site-form" action="{% url 'registration' %}" method="post">
+            <form class="site-form" action="{% url 'customer:customer_registration' %}" method="post">
             {% csrf_token %}
             {{ signform|crispy }}
-            <input type="submit" value="Signup" class="btn">
+            <input type="submit" value="Signup" class="btn-sm app-btn-secondary">
             </form>
-            <span><a href="/login" class="text-secondary" style="font-size:13px">Back to login</a></span>
+            <span><a href="{% url 'customer:customer_login' %}" class="text-secondary" style="font-size:13px">Back to login</a></span>
             <div class="mt-3">
                 {% if message %}
                 {% if msgtype == "successful" %}

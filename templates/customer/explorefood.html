@@ -18,7 +18,7 @@
             <div class="d-flex align-items-center justify-content-between">
               <p class="text-lg font-weight-bold">BDT {{item.food_price}}</p>
               <div class="d-flex align-items-center">
-                <button class="btn btn-sm btn-primary mx-2">Add to Cart</button>
+                <button class="btn btn-sm btn-primary mx-2"><a href="{% url 'customer:add-to-cart' item.id %}" style="color:black;">Add to Cart</a></button>
                 <button class="btn btn-sm btn-outline-warning"><a class="btn-sm app-btn-secondary" href="{% url 'customer:cus-food-detail' item.id %}">View</a></button>
               </div>
             </div>

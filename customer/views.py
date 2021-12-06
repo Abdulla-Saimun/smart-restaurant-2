@@ -16,6 +16,7 @@ from django.contrib import messages
 from django.db.models import Sum
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 def customer_dashboard(request):
@@ -38,7 +39,7 @@ def registration(request):
             return redirect('/')
     else:
         form = NewUSerForm()
-    return render(request, 'customer/registration.html', {'signform': form})
+    return render(request, 'customer/registration.html', {'signform': form, 'usr': 'Customer', 'login_var': 'Registration'})
 
 
 # login
@@ -51,7 +52,7 @@ def login_customer(request):
             return redirect('/')
     else:
         form = AuthenticationForm()
-    return render(request, 'customer/login.html', {'form': form})
+    return render(request, 'customer/login.html', {'form': form, 'usr': 'Customer', 'login_var': 'Login'})
 
 
 # logout
@@ -91,13 +92,14 @@ def add_to_cart(request, pk):
         user=request.user,
         ordered=False,
     )
-    messages.info(request, "Added to Cart!!Continue Shopping!!")
-    return reverse("customer:cart")
+    return HttpResponseRedirect(reverse('customer:cart'))
+
+    #return reverse('customer:cart', kwargs={'pk': pk})
 
 
 @login_required
 def get_cart_items(request):
-    cart_items = CartItems.objects.filter(user=request.user,ordered=False)
+    cart_items = CartItems.objects.filter(user=request.user, ordered=False)
     total_item = cart_items.count()
     bill = cart_items.aggregate(Sum('item__food_price'))
     number = cart_items.aggregate(Sum('quantity'))
