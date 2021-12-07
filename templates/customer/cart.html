@@ -41,7 +41,7 @@
                              <li class="list-group-item list-group-item-light text-center text-dark">Total: {{ total }}</li>
                              <li class="list-group-item list-group-item-light text-center text-dark">Total Items: {{ total_item }}</li>
                              <li class="list-group-item list-group-item-light text-center text-dark">Total Pieces Quantity: {{ total_pieces }}</li>
-                             <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="#">Confirm Order</a></li>
+                             <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="{% url 'customer:order_food' %}">Confirm Order</a></li>
                              <li class="list-group-item list-group-item-light text-center"><a class="btn btn-warning text-dark" href="{% url 'customer:explore' %}">Continue Buying</a></li>
                       </ul>
                 </div>

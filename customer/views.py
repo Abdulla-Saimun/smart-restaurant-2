@@ -17,6 +17,7 @@ from django.db.models import Sum
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.utils import timezone
 
 
 def customer_dashboard(request):
@@ -92,6 +93,7 @@ def add_to_cart(request, pk):
         user=request.user,
         ordered=False,
     )
+    messages.info(request, "Added to Cart Successfully!!Continue Shopping!!")
     return HttpResponseRedirect(reverse('customer:cart'))
 
     #return reverse('customer:cart', kwargs={'pk': pk})
@@ -130,6 +132,35 @@ class CartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == cart.user:
             return True
         return False
+
+
+@login_required
+def order_food_by_customer(request):
+    cart_items = CartItems.objects.filter(user=request.user, ordered=False)
+    ordered_date = timezone.now()
+    cart_items.update(ordered=True, ordered_date=ordered_date)
+    messages.info(request, "Item Ordered")
+    return redirect("customer:order_details")
+
+
+@login_required
+def order_details_by_customer(request):
+    items = CartItems.objects.filter(user=request.user, ordered=True, status="Active").order_by('-ordered_date')
+    cart_items = CartItems.objects.filter(user=request.user, ordered=True, status="Delivered").order_by('-ordered_date')
+    bill = items.aggregate(Sum('item__food_price'))
+    number = items.aggregate(Sum('quantity'))
+    pieces = items.aggregate(Sum('item__serving_quantity'))
+    total = bill.get("item__food_price__sum")
+    count = number.get("quantity__sum")
+    total_pieces = pieces.get("item__serving_quantity__sum")
+    context = {
+        'items': items,
+        'cart_items': cart_items,
+        'total': total,
+        'count': count,
+        'total_pieces': total_pieces
+    }
+    return render(request, 'customer/order_detail.html', context)
 
 
 '''def registration(request):
