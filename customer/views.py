@@ -18,6 +18,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils import timezone
+from manager.models import OrderList
 
 
 def customer_dashboard(request):
@@ -153,6 +154,26 @@ def order_details_by_customer(request):
     total = bill.get("item__food_price__sum")
     count = number.get("quantity__sum")
     total_pieces = pieces.get("item__serving_quantity__sum")
+    product_list = []
+    for i in items:
+        product_list.append(i.item.food_title)
+    print(product_list)
+    cust = str(request.user)
+    date = items[0].ordered_date
+    print(date)
+    date_now=timezone.now()
+    order_check = OrderList.objects.filter(customer=cust, status='Active', date=date_now)
+    print(order_check)
+    print(type(order_check))
+    if order_check:
+        order_check.update(products=product_list, total=total)
+        print('if executed')
+    else:
+        orderCreate = OrderList.objects.create(products=product_list, customer=cust, date=date, total=total,
+                                               status='Active')
+        orderCreate.save()
+        print('else executed')
+
     context = {
         'items': items,
         'cart_items': cart_items,

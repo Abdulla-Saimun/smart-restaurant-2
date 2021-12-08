@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib import messages
 from food.models import food_item
 from customer.models import CartItems
+from .models import OrderList
 
 
 # Create your views here.
@@ -95,7 +96,7 @@ def manager_logout(request):
 
 
 def order_foods(request):
-    queryset = CartItems.objects.all()
+    queryset = OrderList.objects.all()
     context = {
         'orders': queryset
     }

@@ -42,11 +42,11 @@
 										{% for order in orders%}
 											<tr>
 												<td class="cell">{{order.id}}</td>
-												<td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-												<td class="cell">John Sanders</td>
-												<td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
+												<td class="cell"><span class="truncate">{{order.products}}</span></td>
+												<td class="cell">{{order.customer}}</td>
+												<td class="cell"><span>{{order.date}}</span></td>
 												<td class="cell"><span class="badge bg-success">{{order.status}}</span></td>
-												<td class="cell">$259.35</td>
+												<td class="cell">{{order.total}}</td>
 												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">Confirm</a></td>
 												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
 												<td class="cell"><a class="btn-sm btn-danger" href="#">Delete</a></td>

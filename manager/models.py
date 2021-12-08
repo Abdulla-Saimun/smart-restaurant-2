@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password
+from django.contrib.postgres.fields import ArrayField
+from django.utils import timezone
 
 
 # Create your models here.
@@ -22,3 +24,19 @@ class manager_account(models.Model):
 class food(models.Model):
     category = models.CharField(max_length=254)
     title = models.CharField(max_length=100)
+
+
+class OrderList(models.Model):
+    ORDER_STATUS = (
+        ('Active', 'Active'),
+        ('Processing', 'Processing'),
+        ('Delivered', 'Delivered')
+    )
+    products = ArrayField(models.CharField(max_length=500), blank=True)
+    customer = models.CharField(max_length=100, blank=True, null=True)
+    date = models.DateField(default=timezone.now)
+    status = models.CharField(max_length=20, choices=ORDER_STATUS, default='Active')
+    total = models.FloatField()
+
+    def __str__(self):
+        return str(self.id)
