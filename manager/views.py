@@ -4,6 +4,7 @@ from .models import manager_account
 from django.contrib.auth.hashers import check_password
 from django.contrib import messages
 from food.models import food_item
+from customer.models import CartItems
 
 
 # Create your views here.
@@ -94,7 +95,11 @@ def manager_logout(request):
 
 
 def order_foods(request):
-    return render(request, 'manager/order.html')
+    queryset = CartItems.objects.all()
+    context = {
+        'orders': queryset
+    }
+    return render(request, 'manager/order.html', context)
 
 
 def manager_overview(request):
