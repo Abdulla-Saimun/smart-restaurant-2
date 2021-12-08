@@ -6,7 +6,8 @@ from django.contrib import messages
 from food.models import food_item
 from customer.models import CartItems
 from .models import OrderList
-
+from django.urls import reverse
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -104,10 +105,43 @@ def order_foods(request):
     return render(request, 'manager/order.html', context)
 
 
+def processing_order(request):
+    queryset = OrderList.objects.filter(status='Processing')
+    context = {
+        'orders': queryset
+    }
+    return render(request, 'manager/processing_order.html', context)
+
+
+def delivered_order(request):
+    queryset = OrderList.objects.filter(status='Delivered')
+    context = {
+        'orders': queryset
+    }
+    return render(request, 'manager/delivered_order.html', context)
+
+
+def all_order(request):
+    queryset = OrderList.objects.all()
+    context = {
+        'orders': queryset
+    }
+    return render(request, 'manager/all_order.html', context)
+
+
 def manager_overview(request):
     query_quantity = food_item.objects.all().count()
+    total_amouont = OrderList.objects.filter(status='Processing')
+    active_order = OrderList.objects.filter(status='Active').count()
+    in_process = total_amouont.count()
+    x = total_amouont.aggregate(Sum('total'))
+    total = x.get('total__sum')
+    print(total)
     context = {
-        'total_item': query_quantity
+        'total_item': query_quantity,
+        'total_amount': total,
+        'active_order': active_order,
+        'in_process': in_process
     }
     return render(request, 'manager/manager_dashboard.html', context)
 

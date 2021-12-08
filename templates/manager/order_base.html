@@ -9,10 +9,10 @@
 				    </div>
 			    </div><!--//row-->
 			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-				    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all" role="tab" aria-controls="orders-all" aria-selected="true">Active</a>
-				    <a class="flex-sm-fill text-sm-center nav-link"  id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid" role="tab" aria-controls="orders-paid" aria-selected="false">All</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending" role="tab" aria-controls="orders-pending" aria-selected="false">Processing</a>
-				    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="#orders-cancelled" role="tab" aria-controls="orders-cancelled" aria-selected="false">Delivered</a>
+				    <a class="flex-sm-fill text-sm-center nav-link active" href="{% url 'manager:order_foods' %}"  aria-controls="orders-all" aria-selected="true">Active</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" href="{% url 'manager:all_order' %}" >All</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" href="{% url 'manager:processing' %}" >Processing</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" href="{% url 'manager:delivered' %}"  >Delivered</a>
 				</nav>
 				<div class="tab-content" id="orders-table-tab-content">
 			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -22,7 +22,7 @@
 							        {% block table%}
                                     {% endblock%}
 						        </div><!--//table-responsive-->
-						    </div><!--//app-card-body-->
+						    </div>
 						</div><!--//app-card-->
 						<nav class="app-pagination">
 							<ul class="pagination justify-content-center">

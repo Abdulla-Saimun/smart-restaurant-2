@@ -3,7 +3,7 @@ from .models import manager_account, OrderList
 
 
 class OrderlistAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer', 'product_id', 'total', 'products')
+    list_display = ('id', 'customer', 'product_id', 'total', 'products', 'status')
 
 # Register your models here.
 
