@@ -8,6 +8,7 @@ from customer.models import CartItems
 from .models import OrderList
 
 
+
 # Create your views here.
 
 def manager_registration(request):
@@ -96,7 +97,7 @@ def manager_logout(request):
 
 
 def order_foods(request):
-    queryset = OrderList.objects.all()
+    queryset = OrderList.objects.filter(status='Active')
     context = {
         'orders': queryset
     }
@@ -109,6 +110,22 @@ def manager_overview(request):
         'total_item': query_quantity
     }
     return render(request, 'manager/manager_dashboard.html', context)
+
+
+def order_confirm(request, id):
+    order_check = OrderList.objects.get(id=id)
+    get_id = order_check.product_id
+    for i in get_id:
+        x = int(i)
+        c_item = CartItems.objects.filter(id=x, status='Active')
+        c_item.update(status='Processing')
+
+    order_status = OrderList.objects.filter(id=id, status='Active')
+    print(get_id)
+    if order_status:
+        order_status.update(status='Processing')
+
+    return render(request, 'manager/manager_dashboard.html')
 
 
 '''def manager_login(request):

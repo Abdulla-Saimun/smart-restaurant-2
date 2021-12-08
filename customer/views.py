@@ -41,7 +41,8 @@ def registration(request):
             return redirect('/')
     else:
         form = NewUSerForm()
-    return render(request, 'customer/registration.html', {'signform': form, 'usr': 'Customer', 'login_var': 'Registration'})
+    return render(request, 'customer/registration.html',
+                  {'signform': form, 'usr': 'Customer', 'login_var': 'Registration'})
 
 
 # login
@@ -97,7 +98,7 @@ def add_to_cart(request, pk):
     messages.info(request, "Added to Cart Successfully!!Continue Shopping!!")
     return HttpResponseRedirect(reverse('customer:cart'))
 
-    #return reverse('customer:cart', kwargs={'pk': pk})
+    # return reverse('customer:cart', kwargs={'pk': pk})
 
 
 @login_required
@@ -146,42 +147,59 @@ def order_food_by_customer(request):
 
 @login_required
 def order_details_by_customer(request):
-    items = CartItems.objects.filter(user=request.user, ordered=True, status="Active").order_by('-ordered_date')
-    cart_items = CartItems.objects.filter(user=request.user, ordered=True, status="Delivered").order_by('-ordered_date')
-    bill = items.aggregate(Sum('item__food_price'))
-    number = items.aggregate(Sum('quantity'))
-    pieces = items.aggregate(Sum('item__serving_quantity'))
-    total = bill.get("item__food_price__sum")
-    count = number.get("quantity__sum")
-    total_pieces = pieces.get("item__serving_quantity__sum")
-    product_list = []
-    for i in items:
-        product_list.append(i.item.food_title)
-    print(product_list)
-    cust = str(request.user)
-    date = items[0].ordered_date
-    print(date)
-    date_now=timezone.now()
-    order_check = OrderList.objects.filter(customer=cust, status='Active', date=date_now)
-    print(order_check)
-    print(type(order_check))
-    if order_check:
-        order_check.update(products=product_list, total=total)
-        print('if executed')
-    else:
-        orderCreate = OrderList.objects.create(products=product_list, customer=cust, date=date, total=total,
-                                               status='Active')
-        orderCreate.save()
-        print('else executed')
+    context = dict()
+    try:
+        items_active = CartItems.objects.filter(user=request.user, ordered=True, status="Active").order_by(
+            '-ordered_date')
+        cart_items_delivered = CartItems.objects.filter(user=request.user, ordered=True, status="Delivered").order_by(
+            '-ordered_date')
+        cart_items_processed = CartItems.objects.filter(user=request.user, ordered=True, status="Processing").order_by(
+            '-ordered_date')
+        bill = items_active.aggregate(Sum('item__food_price'))
+        number = items_active.aggregate(Sum('quantity'))
+        pieces = items_active.aggregate(Sum('item__serving_quantity'))
+        total = bill.get("item__food_price__sum")
+        count = number.get("quantity__sum")
+        total_pieces = pieces.get("item__serving_quantity__sum")
+        product_list = []
+        cart_id_list = []
+        for i in items_active:
+            product_list.append(i.item.food_title)
+            cart_id_list.append(i.id)
+        print(product_list)
+        cust = str(request.user)
+        if items_active:
+            date = items_active[0].ordered_date
+            print(date)
 
-    context = {
-        'items': items,
-        'cart_items': cart_items,
-        'total': total,
-        'count': count,
-        'total_pieces': total_pieces
-    }
-    return render(request, 'customer/order_detail.html', context)
+        date_now = timezone.now()
+        order_check = OrderList.objects.filter(customer=cust, status='Active', date=date_now)
+        print(order_check)
+        print(type(order_check))
+        if order_check:
+            order_check.update(products=product_list, total=total, product_id=cart_id_list)
+            print('if executed')
+        else:
+            orderCreate = OrderList.objects.create(products=product_list, customer=cust, date=timezone.now(),
+                                                   total=total,
+                                                   status='Active', product_id=cart_id_list)
+            orderCreate.save()
+            print('else executed')
+
+        context = {
+            'items': items_active,
+            'cart_items': cart_items_delivered,
+            'total': total,
+            'count': count,
+            'total_pieces': total_pieces,
+            'processed_item': cart_items_processed
+        }
+        return render(request, 'customer/order_detail.html', context)
+    except:
+        context = {
+            'msg': 'there is no data found'
+        }
+        return render(request, 'customer/order_detail.html', context)
 
 
 '''def registration(request):

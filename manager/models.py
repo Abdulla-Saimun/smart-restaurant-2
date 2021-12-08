@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.hashers import make_password
 from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
+from django.urls import reverse
 
 
 # Create your models here.
@@ -37,6 +38,10 @@ class OrderList(models.Model):
     date = models.DateField(default=timezone.now)
     status = models.CharField(max_length=20, choices=ORDER_STATUS, default='Active')
     total = models.FloatField()
+    product_id = ArrayField(models.CharField(max_length=100), blank=True, null=True)
 
     def __str__(self):
         return str(self.id)
+
+    def get_absolute_url(self):
+        return reverse('manager:order-confirm', kwargs={'id': self.id})
