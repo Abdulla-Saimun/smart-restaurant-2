@@ -8,7 +8,7 @@ from customer.models import CartItems
 from .models import OrderList
 from django.urls import reverse
 from django.db.models import Sum
-
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -98,7 +98,7 @@ def manager_logout(request):
 
 
 def order_foods(request):
-    queryset = OrderList.objects.filter(status='Active')
+    queryset = OrderList.objects.filter(status='Active').order_by('id')
     context = {
         'orders': queryset
     }
@@ -106,7 +106,7 @@ def order_foods(request):
 
 
 def processing_order(request):
-    queryset = OrderList.objects.filter(status='Processing')
+    queryset = OrderList.objects.filter(status='Processing').order_by('id')
     context = {
         'orders': queryset
     }
@@ -114,7 +114,7 @@ def processing_order(request):
 
 
 def delivered_order(request):
-    queryset = OrderList.objects.filter(status='Delivered')
+    queryset = OrderList.objects.filter(status='Delivered').order_by('id')
     context = {
         'orders': queryset
     }
@@ -122,7 +122,7 @@ def delivered_order(request):
 
 
 def all_order(request):
-    queryset = OrderList.objects.all()
+    queryset = OrderList.objects.all().order_by('id')
     context = {
         'orders': queryset
     }
@@ -159,7 +159,7 @@ def order_confirm(request, id):
     if order_status:
         order_status.update(status='Processing')
 
-    return render(request, 'manager/manager_dashboard.html')
+    return HttpResponseRedirect(reverse('manager:order_foods'))
 
 
 '''def manager_login(request):

@@ -1,0 +1,36 @@
+{% extends 'chef/order_base.html' %}
+{% block table %}
+<table class="table app-table-hover mb-0 text-left">
+    <thead>
+        <tr>
+            <th class="cell">Order</th>
+            <th class="cell">Product</th>
+            <th class="cell">Customer</th>
+            <th class="cell">Date</th>
+            <th class="cell">Status</th>
+            <th class="cell">Total</th>
+            <th class="cell"></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if orders%}
+    {% for order in orders%}
+        <tr>
+            <td class="cell">{{order.id}}</td>
+            <td class="cell"><span class="truncate">{{order.products}}</span></td>
+            <td class="cell">{{order.customer}}</td>
+            <td class="cell"><span>{{order.date}}</span></td>
+            <td class="cell"><span class="badge bg-success">{{order.status}}</span></td>
+            <td class="cell">{{order.total}}</td>
+     <!--       <td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'manager:order-confirm' order.id %}">Confirm</a></td>
+            <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
+            <td class="cell"><a class="btn-sm btn-danger" href="#">Delete</a></td> -->
+        </tr>
+    {% endfor %}
+    {% else %}
+    <p>there is no order</p>
+    {% endif %}
+
+    </tbody>
+</table>
+{% endblock %}

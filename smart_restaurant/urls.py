@@ -17,11 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('admin/', admin.site.urls), 
     path('', include('customer.urls', namespace='customer')),
     path('manager/', include('manager.urls')),
     path('food/', include('food.urls')),
+    path('chef/', include('chef.urls', namespace='chef'))
+
+
 ]
 
 if settings.DEBUG:

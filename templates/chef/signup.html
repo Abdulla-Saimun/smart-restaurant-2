@@ -1,0 +1,53 @@
+{% extends 'base/index.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<html>
+<head>
+    <style>
+        .usersignupform{
+            margin: auto;
+            width: 50%;
+            border: 3px solid green;
+            padding: 10px;
+
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+    <div class="usersignupform p-3" id="design">
+        <h4 class="d-inline-block">Chef Registration</h4>
+        <div class="bg-info mb-3" style="padding: 0.5px;"></div>
+        <div id="">
+            <form action="{% url 'chef:chef-signup' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ regForm | crispy }}
+                <div id="div_id_man_pass" class="form-group">
+	                <label for="id_man_pass" class=" requiredField">
+                     Man pass 2<span class="asteriskField">*</span>
+                    </label>
+                    <div class="">
+                    <input type="password" name="chef_pass2" class="textinput textInput form-control" required="" id="id_man_pass">
+                     </div>
+                </div>
+                <input type="submit" class="btn btn-outline-success btn-sm float-right" value="Register">
+            </form>
+            <span><a href="login" class="text-secondary" style="font-size:13px">Back to login</a></span>
+            <div class="mt-3">
+                {% if message %}
+                {% if msgtype == "successful" %}
+                <p class="alert alert-warning" id="alert-style">{{ message }}</p>
+                {% else %}
+                <p class="alert alert-danger" id="alert-styles">Try Again{{ message }}</p>
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+{% endblock %}

@@ -13,4 +13,5 @@ urlpatterns = [
     path('processing', views.processing_order, name='processing'),
     path('delivered', views.delivered_order, name='delivered'),
     path('all', views.all_order, name='all_order')
+
 ]

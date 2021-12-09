@@ -15,7 +15,6 @@ from .forms import FoodItemModelForm
 # Create your views here.
 
 
-
 class FoodDetailView(DetailView):
     template_name = 'food/food_detail.html'
 

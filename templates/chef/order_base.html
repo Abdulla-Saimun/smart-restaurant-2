@@ -1,0 +1,50 @@
+{% extends 'chef/chef_dash_base.html' %}
+{% block content %}
+<div class="app-wrapper">
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    <div class="row g-3 mb-4 align-items-center justify-content-between">
+				    <div class="col-auto">
+			            <h1 class="app-page-title mb-0">Orders</h1>
+				    </div>
+			    </div><!--//row-->
+			    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+				    <a class="flex-sm-fill text-sm-center nav-link active" href="{% url 'chef:chef_foods_order' %}"  aria-controls="orders-all" aria-selected="true">Processing</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" href="{% url 'chef:all_order' %}" >All</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" href="{% url 'chef:active' %}" >Active</a>
+				    <a class="flex-sm-fill text-sm-center nav-link" href="{% url 'chef:delivered' %}"  >Delivered</a>
+				</nav>
+				<div class="tab-content" id="orders-table-tab-content">
+			        <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
+					    <div class="app-card app-card-orders-table shadow-sm mb-5">
+						    <div class="app-card-body">
+							    <div class="table-responsive">
+							        {% block table%}
+                                    {% endblock%}
+						        </div><!--//table-responsive-->
+						    </div>
+						</div><!--//app-card-->
+						<nav class="app-pagination">
+							<ul class="pagination justify-content-center">
+								<li class="page-item disabled">
+									<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+							    </li>
+								<li class="page-item active"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+								    <a class="page-link" href="#">Next</a>
+								</li>
+							</ul>
+						</nav><!--//app-pagination-->
+			        </div><!--//tab-pane-->
+			        <div class="tab-pane fade" id="orders-paid" role="tabpanel" aria-labelledby="orders-paid-tab">
+					    <div class="app-card app-card-orders-table mb-5">
+						    <-//app-card-body-->
+						</div><!--//app-card-->
+			        </div><!--//tab-pane-->
+				</div><!--//tab-content-->
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content-->
+</div><!--//app-wrapper-->
+{% endblock %}

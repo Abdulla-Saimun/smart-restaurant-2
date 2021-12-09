@@ -45,3 +45,6 @@ class OrderList(models.Model):
 
     def get_absolute_url(self):
         return reverse('manager:order-confirm', kwargs={'id': self.id})
+
+    def get_absolute_url_chef(self):
+        return reverse('chef:order-confirm', kwargs={'id': self.id})

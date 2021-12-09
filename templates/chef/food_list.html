@@ -1,4 +1,4 @@
-{% extends 'manager/man_dash_base.html' %}
+{% extends 'chef/chef_dash_base.html' %}
 {% block content %}
 <div class="app-wrapper">
 
@@ -44,9 +44,6 @@
 												<td class="cell">{{food.food_catagory}}</td>
 												<td class="cell">{{food.serving_quantity}}</td>
 												<td class="cell">{{food.date_of_creation}}</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'food:food-detail' food.id %}">Detail</a></td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'food:food-update' food.id %}">update</a></td>
-												<td class="cell"><a class="btn-sm btn-danger" href="{% url 'food:food-delete' food.id %}">Delete</a></td>
 											</tr>
 										{% endfor %}
 										</tbody>
