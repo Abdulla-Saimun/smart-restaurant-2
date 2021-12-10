@@ -1,5 +1,30 @@
 
 {% extends 'customer/cusbase.html' %}
+
+{% block section %}
+  <section id="home">
+      <div class="container-fluid px-0 top-banner">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5 col-md-6">
+              <h1>SPICE<br />MEDIUM<span>PIZZAS</span></h1>
+              <h2>MEDIUM-2 TOPPING* Pizza</h2>
+              <div class="sign">
+                <span class="sign__word" style="color:aqua">"Pizza is not a 'trend' it's a way of life" - Anonymous</span>
+              </div>
+              <div class="mt-4">
+                <button class="main-btn">
+                  order now <i class="fas fa-shopping-basket ps-3"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}
+
+
 {% block content %}
 {% load static %}
 <div class="container">
@@ -11,14 +36,11 @@
             </div>
             <div class="col-lg-5 col-md-12 text-sec">
               <h2>
-                Voluptas beatae earum reprehenderit molestias officiis quod modi
-                quam?
+                Making Naturally Leavened Pizza Dough
               </h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi
-                cumque explicabo ipsum iste dolore officiis!
+              <p style="color:red;">
+                Using Starter- Pizza Dough!  We all know you can buy pre-made pizza dough and make a lack luster pizza crust. It is time to level up your pizza game and make your own dough using your own starter.
               </p>
-              <button class="main-btn mt-4">Learn more</button>
             </div>
           </div>
         </div>
@@ -28,17 +50,10 @@
           <div class="row align-items-center">
             <div class="col-lg-5 col-md-12 text-sec mb-lg-0 mb-5">
               <h2>We make every by fresh hand and very carefully.</h2>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam
-                blanditiis asperiores nam.
+              <p style="color:white;">
+               Be The Star Of The Pizza Party! Looking to make your homemade pizza exciting? A star-shaped pizza is visually stunning as well as a classy way to improve the beloved stuffed crusted pizza.
               </p>
-              <ul class="py-3">
-                <li>Lorem ipsum dolor sit amet consectetur.</li>
-                <li>Lorem ipsum dolor sit amet consectetur.</li>
-                <li>Lorem ipsum dolor sit amet consectetur.</li>
-                <li>Lorem ipsum dolor sit amet consectetur.</li>
-              </ul>
-              <button class="main-btn">Learn More</button>
+              
             </div>
             <div class="col-lg-7 col-md-12">
               <div class="card border-0">
@@ -47,4 +62,95 @@
             </div>
           </div>
         </div>
+{% endblock %}
+
+
+{% block feedback %}
+    <section id="testimonial">
+      <div class="wrapper testimonial-section">
+        <div class="container text-center">
+          <div class="text-center pb-4">
+            <h2>Testimunial</h2>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-lg-10 offset-lg-1">
+              <div
+                id="carouselExampleIndicators"
+                class="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                  ></button>
+                </div>
+                <div class="carousel-inner">
+
+                  <div class="carousel-item active">
+                    <div class="carousel-caption">
+                      <img
+                        src="{% static 'images/review/review-1.jpg' %}"
+                        class="d-block w-100"
+                        alt="..."
+                      />
+                      <p>
+                        this is example
+                      </p>
+                        <h5></h5>
+                    </div>
+                  </div>
+
+                  {% for feedback in feedbacks %}
+                 <div class="carousel-item">
+                    <div class="carousel-caption">
+                      <img
+                        src="{% static 'images/review/usericon.png' %}"
+                        class="d-block w-100"
+                        alt="carousel-item active"
+                      />
+                      <p>
+                        {{feedback.content}}
+                      </p>
+                      <h5>{{feedback.customer}}</h5>
+                    </div>
+                  </div>
+                  {% endfor %}
+                  <!--
+                  <div class="carousel-item">
+                    <div class="carousel-caption">
+                      <img
+                        src="{% static 'images/review/review-1.jpg' %}"
+                        class="d-block w-100"
+                        alt="carousel-item active"
+                      />
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      </p>
+                      <h5>modon- Web Developer</h5>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 {% endblock %}

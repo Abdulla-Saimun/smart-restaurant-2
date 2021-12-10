@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
-from .models import CartItems
+from .models import CartItems, Customer_feedback
 
 
 # Register your models here.
@@ -16,4 +16,10 @@ class CartItemsAdmin(admin.ModelAdmin):
     list_filter = ('ordered', 'ordered_date', 'status')
 
 
+class CustomerFeedbackAdmin(admin.ModelAdmin):
+    list_display = ('id', 'content', 'date', 'customer')
+
+
+
 admin.site.register(CartItems, CartItemsAdmin)
+admin.site.register(Customer_feedback, CustomerFeedbackAdmin)

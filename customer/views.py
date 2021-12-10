@@ -10,7 +10,7 @@ from django.views.generic import (
     DetailView,
     DeleteView
 )
-from .models import CartItems
+from .models import CartItems, Customer_feedback
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Sum
@@ -22,7 +22,10 @@ from manager.models import OrderList
 
 
 def customer_dashboard(request):
-    context = {}
+    feedback = Customer_feedback.objects.all().order_by('id').reverse()
+    context = {
+        'feedbacks': feedback
+    }
     return render(request, 'customer/cushome.html', context)
 
 
@@ -200,6 +203,18 @@ def order_details_by_customer(request):
             'msg': 'there is no data found'
         }
         return render(request, 'customer/order_detail.html', context)
+
+
+def customer_feedback(request):
+    if request.method == 'POST':
+        contentbody = request.POST['textcontent']
+        if contentbody:
+            date = timezone.now()
+            user = request.user
+            feedback = Customer_feedback.objects.create(content=contentbody, date=date, customer=user)
+            feedback.save()
+        return HttpResponseRedirect(reverse('customer:customer_dashboard'))
+
 
 
 '''def registration(request):

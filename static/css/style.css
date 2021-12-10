@@ -146,7 +146,7 @@ p {
   font-size: 0.9375rem;
   font-weight: 600;
   text-transform: capitalize;
-  color: var(--white-color);
+  color: green;
   letter-spacing: 1px;
 }
 .nav-link:hover,

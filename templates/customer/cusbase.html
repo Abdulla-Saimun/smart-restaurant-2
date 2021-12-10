@@ -47,22 +47,24 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+              <li class="nav-item"  style="color:green;">
                 <a class="nav-link active" aria-current="page" href="#home"
-                  >Home</a
+                 >Home</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item"  style="color:green;">
                 <a class="nav-link" href="about">About</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'customer:explore' %}">Explore Food</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="testimonial">Reviews</a>
-              </li>
-
               {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="#testimonial">Feedback</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'customer:cart' %}">Cart</a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" style="color:red">hello {{user}}</a>
               </li>
@@ -86,108 +88,13 @@
       </nav>
     </header>
     <!--section-1 topbanner -->
-    <section id="home">
-      <div class="container-fluid px-0 top-banner">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-5 col-md-6">
-              <h1>SPICE<br />MEDIUM<span>PIZZAS</span></h1>
-              <h2>MEDIUM-2 TOPPING* Pizza</h2>
-              <div class="sign">
-                <span class="sign__word" style="color:aqua">"Pizza is not a 'trend' it's a way of life" - Anonymous</span>
-              </div>
-              <div class="mt-4">
-                <button class="main-btn">
-                  order now <i class="fas fa-shopping-basket ps-3"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    {% block section %}
+    {% endblock %}
 
     <!--section-2 our menu -->
-    <section class="our-menu p-4">
-      <div class="container text-center">
-        <h2 class="pb-4">our menu</h2>
-        <div class="row">
-          <div class="col-6 col-sm-2 mb-4 mb-lg-0">
-            <div class="card">
-              <div class="cat-image">
-                <a href="#" class="link_category_product">
-                  <img src="{% static './images/img/category1.png' %}" alt="" />
-                </a>
-              </div>
-              <div class="cat-title">
-                <a href="">pizza</a>
-              </div>
-            </div>
-          </div>
+    {% block type %}
+    {% endblock %}
 
-          <div class="col-6 col-sm-2 mb-4 mb-lg-0">
-            <div class="card">
-              <div class="cat-image">
-                <a href="#" class="link_category_product">
-                  <img src="{% static './images/img/category2.png' %}" alt="" />
-                </a>
-              </div>
-              <div class="cat-title">
-                <a href="">Souces</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-2 mb-4 mb-lg-0">
-            <div class="card">
-              <div class="cat-image">
-                <a href="#" class="link_category_product">
-                  <img src="{% static './images/img/category3.png' %}" alt="" />
-                </a>
-              </div>
-              <div class="cat-title">
-                <a href="">Kombo</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-2 mb-4 mb-lg-0">
-            <div class="card">
-              <div class="cat-image">
-                <a href="#" class="link_category_product">
-                  <img src="{% static './images/img/category4.png' %}" alt="" />
-                </a>
-              </div>
-              <div class="cat-title">
-                <a href="">Kids menu</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-2 mb-4 mb-lg-0">
-            <div class="card">
-              <div class="cat-image">
-                <a href="#" class="link_category_product">
-                  <img src="{% static './images/img/category5.png' %}" alt="" />
-                </a>
-              </div>
-              <div class="cat-title">
-                <a href="">Chicken</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-6 col-sm-2 mb-4 mb-lg-0">
-            <div class="card">
-              <div class="cat-image">
-                <a href="#" class="link_category_product">
-                  <img src="{% static './images/img/category6.png' %}" alt="" />
-                </a>
-              </div>
-              <div class="cat-title">
-                <a href="">Box meal</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!--section-3 about -->
     <section id="about">
       <div class="about-section wrapper">
@@ -204,10 +111,8 @@
               <div class="text-content text-center">
                 <h2>Explore Our food</h2>
                 <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Dolores placeat reprehenderit dolorum consectetur quaerat
-                  labore deserunt tempore ut ipsa nihil eum, illo repellat nulla
-                  amet.
+                  We’re here to serve you the best food around.
+
                 </p>
               </div>
             </div>
@@ -216,40 +121,19 @@
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-5">
               <div class="card border">
                 <img src="{% static 'images/img/img-3.jpg' %}" class="img-fluid" />
-                <div class="p-3">
-                  <h5>10 Resons to Do a digital challenge</h5>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
-                    dolorum vero impedit quae!
-                  </p>
-                  <button class="mt-2 main-btn">Read More</button>
-                </div>
+
               </div>
             </div>
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-5">
               <div class="card border">
                 <img src="{% static 'images/img/img-4.jpg' %}" class="img-fluid" />
-                <div class="p-3">
-                  <h5>10 Resons to Do a digital challenge</h5>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
-                    dolorum vero impedit quae!
-                  </p>
-                  <button class="mt-2 main-btn">Read More</button>
-                </div>
+
               </div>
             </div>
             <div class="col-lg-4 col-md-6 mb-lg-0 mb-5">
               <div class="card border">
                 <img src="{% static 'images/img/img-5.jpg' %}" class="img-fluid" />
-                <div class="p-3">
-                  <h5>10 Resons to Do a digital challenge</h5>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
-                    dolorum vero impedit quae!
-                  </p>
-                  <button class="mt-2 main-btn">Read More</button>
-                </div>
+
               </div>
             </div>
           </div>
@@ -258,89 +142,7 @@
     </section>
 
     <!--section-5 testimunial -->
-
-    <section id="testimonial">
-      <div class="wrapper testimonial-section">
-        <div class="container text-center">
-          <div class="text-center pb-4">
-            <h2>Testimunial</h2>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-lg-10 offset-lg-1">
-              <div
-                id="carouselExampleIndicators"
-                class="carousel slide"
-                data-bs-ride="carousel"
-              >
-                <div class="carousel-indicators">
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="0"
-                    class="active"
-                    aria-current="true"
-                    aria-label="Slide 1"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="1"
-                    aria-label="Slide 2"
-                  ></button>
-                  <button
-                    type="button"
-                    data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide-to="2"
-                    aria-label="Slide 3"
-                  ></button>
-                </div>
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <div class="carousel-caption">
-                      <img
-                        src="{% static 'images/review/review-1.jpg' %}"
-                        class="d-block w-100"
-                        alt="..."
-                      />
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      </p>
-
-                    </div>
-                  </div>
-                  <div class="carousel-item">
-                    <div class="carousel-caption">
-                      <img
-                        src="{% static 'images/review/review-2.jpg' %}"
-                        class="d-block w-100"
-                        alt="carousel-item active"
-                      />
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      </p>
-                      <h5>Sabina Eyasmin- Web Developer</h5>
-                    </div>
-                  </div>
-                  <div class="carousel-item">
-                    <div class="carousel-caption">
-                      <img
-                        src="{% static 'images/review/review-1.jpg' %}"
-                        class="d-block w-100"
-                        alt="carousel-item active"
-                      />
-                      <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      </p>
-                      <h5>modon- Web Developer</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    {% block feedback %} {% endblock %}
     <!-----footer-->
     <footer id="footer">
       <div class="footer pt-5">
@@ -355,19 +157,27 @@
                 <a href="#"><i class="fab fa-linkedin"></i></a>
               </div>
             </div>
+            {% if user.is_authenticated %}
             <div class="col-md-6">
               <div class="newslatter">
                 <div class="d-flex">
-                  <input
+                  <form action="{% url 'customer:feedback' %}" method="post">
+                    {% csrf_token %}
+                    <input
                     type="text"
                     class="form-control"
-                    placeholder="Enter Eail Address"
-                    type="mail"
+                    placeholder="Enter Your Feedback"
+                    type="text"
+                    name="textcontent"
                   />
                   <button class="main-btn" type="submit">Submit</button>
+                  </form>
+
                 </div>
               </div>
             </div>
+            {% endif %}
+
             <div class="col-sm-12">
               <div class="footer-copy">
                 <div class="copy-right text-center pt-5">

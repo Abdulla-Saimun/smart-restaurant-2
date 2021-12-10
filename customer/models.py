@@ -38,6 +38,14 @@ class CartItems(models.Model):
         })
 
 
+class Customer_feedback(models.Model):
+    content = models.CharField(max_length=1000, blank=False, null=False)
+    date = models.DateField(default=timezone.now())
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
+
 '''
 # Create your models here.
 class customer_account(models.Model):
