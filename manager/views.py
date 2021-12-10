@@ -69,7 +69,10 @@ def manager_login(request):
                     'foods': food_all
                 }
                 print('login successful')
-                return render(request, 'manager/manager_dashboard.html', context)
+                ses = request.session['man_userid']
+
+                # return render(request, 'manager/manager_dashboard.html', context)
+                return HttpResponseRedirect(reverse('manager:manager_overview'))
             else:
                 messages.success(request, "Invalid credential! Try again..")
                 print('login failed')
@@ -96,80 +99,108 @@ def manager_logout(request):
         print('key is deleted')
         del request.session['man_userid']
 
-    return render(request, 'manager/login.html')
+    return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def order_foods(request):
-    queryset = OrderList.objects.filter(status='Active').order_by('id')
-    context = {
-        'orders': queryset
-    }
-    return render(request, 'manager/order.html', context)
+    ses = request.session.has_key('man_userid')
+    if ses:
+        queryset = OrderList.objects.filter(status='Active').order_by('id')
+        context = {
+            'orders': queryset
+        }
+        return render(request, 'manager/order.html', context)
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def processing_order(request):
-    queryset = OrderList.objects.filter(status='Processing').order_by('id')
-    context = {
-        'orders': queryset
-    }
-    return render(request, 'manager/processing_order.html', context)
+    ses = request.session.has_key('man_userid')
+    if ses:
+        queryset = OrderList.objects.filter(status='Processing').order_by('id')
+        context = {
+            'orders': queryset
+        }
+        return render(request, 'manager/processing_order.html', context)
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def delivered_order(request):
-    queryset = OrderList.objects.filter(status='Delivered').order_by('id')
-    context = {
-        'orders': queryset
-    }
-    return render(request, 'manager/delivered_order.html', context)
+    ses = request.session.has_key('man_userid')
+    if ses:
+        queryset = OrderList.objects.filter(status='Delivered').order_by('id')
+        context = {
+            'orders': queryset
+        }
+        return render(request, 'manager/delivered_order.html', context)
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def all_order(request):
-    queryset = OrderList.objects.all().order_by('id')
-    context = {
-        'orders': queryset
-    }
-    return render(request, 'manager/all_order.html', context)
+    ses = request.session.has_key('man_userid')
+    if ses:
+        queryset = OrderList.objects.all().order_by('id')
+        context = {
+            'orders': queryset
+        }
+        return render(request, 'manager/all_order.html', context)
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def manager_overview(request):
-    query_quantity = food_item.objects.all().count()
-    total_amouont = OrderList.objects.filter(status='Processing')
-    active_order = OrderList.objects.filter(status='Active').count()
-    in_process = total_amouont.count()
-    x = total_amouont.aggregate(Sum('total'))
-    total = x.get('total__sum')
-    print(total)
-    context = {
-        'total_item': query_quantity,
-        'total_amount': total,
-        'active_order': active_order,
-        'in_process': in_process
-    }
-    return render(request, 'manager/manager_dashboard.html', context)
+    ses = request.session.has_key('man_userid')
+    if ses:
+        query_quantity = food_item.objects.all().count()
+        total_amouont = OrderList.objects.filter(status='Processing')
+        active_order = OrderList.objects.filter(status='Active').count()
+        in_process = total_amouont.count()
+        x = total_amouont.aggregate(Sum('total'))
+        total = x.get('total__sum')
+        print(total)
+        context = {
+            'total_item': query_quantity,
+            'total_amount': total,
+            'active_order': active_order,
+            'in_process': in_process
+        }
+        return render(request, 'manager/manager_dashboard.html', context)
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def order_confirm(request, id):
-    order_check = OrderList.objects.get(id=id)
-    get_id = order_check.product_id
-    for i in get_id:
-        x = int(i)
-        c_item = CartItems.objects.filter(id=x, status='Active')
-        c_item.update(status='Processing')
+    ses = request.session.has_key('man_userid')
+    if ses:
+        order_check = OrderList.objects.get(id=id)
+        get_id = order_check.product_id
+        for i in get_id:
+            x = int(i)
+            c_item = CartItems.objects.filter(id=x, status='Active')
+            c_item.update(status='Processing')
 
-    order_status = OrderList.objects.filter(id=id, status='Active')
-    print(get_id)
-    if order_status:
-        order_status.update(status='Processing')
+        order_status = OrderList.objects.filter(id=id, status='Active')
+        print(get_id)
+        if order_status:
+            order_status.update(status='Processing')
 
-    return HttpResponseRedirect(reverse('manager:order_foods'))
+        return HttpResponseRedirect(reverse('manager:order_foods'))
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def feedback_view(request):
-    feed = Customer_feedback.objects.all().order_by('id').reverse()
-    context = {
-        'feedbacks': feed
-    }
-    return render(request, 'manager/feedback.html', context)
+    ses = request.session.has_key('man_userid')
+    if ses:
+        feed = Customer_feedback.objects.all().order_by('id').reverse()
+        context = {
+            'feedbacks': feed
+        }
+        return render(request, 'manager/feedback.html', context)
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 '''def manager_login(request):

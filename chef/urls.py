@@ -16,3 +16,9 @@ urlpatterns = [
     path('food-list', FoodlistView.as_view(), name='food_list')
 
 ]
+'''def check():
+    ses = request.session.has_key('chef_userid')
+    if ses:
+        pass
+    else:
+        return HttpResponseRedirect(reverse('chef:chef_login'))'''
