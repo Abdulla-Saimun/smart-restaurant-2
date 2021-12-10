@@ -89,6 +89,7 @@
  <!--  https://picsumphotos/200. -->
         {% for item in items %}
         <!-- food card -->
+      <div class="full">
         <div class="card m-2" style="width: 18rem">
           <img
             class="card-img-top"
@@ -96,7 +97,7 @@
             alt="Card image cap"
           />
           <div class="card-body">
-            <h5 class="card-title" style="color:green">{{item.food_title}}</h5>
+            <h5 class="card-title" style="color:rgb(10, 129, 56)">{{item.food_title}}</h5>
             <p class="card-text py-1">
               {{item.food_description}}
             </p>
@@ -109,5 +110,6 @@
             </div>
           </div>
         </div>
+      </div>
   {% endfor %}
 {% endblock %}

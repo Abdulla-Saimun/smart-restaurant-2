@@ -187,6 +187,10 @@ p {
 .our-menu .card {
   border: none;
 }
+.card m-2{
+  display: flex;
+  align-items: center;
+}
 .our-menu .link_category_product {
   position: relative;
   display: block;
@@ -383,9 +387,11 @@ p {
   background-color: #6fd5d5;
 }
 .__foods__container {
+  
+}
+.full{
   width: 100%;
   padding: 10px;
   display: flex;
   align-items: center;
 }
-
