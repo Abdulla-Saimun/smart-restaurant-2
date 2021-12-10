@@ -1,4 +1,5 @@
-
+{% extends 'customer/table_base.html' %}
+ {% block content %}
 <div class="cart">
     <div class="container">
         <div class="row">
@@ -35,10 +36,45 @@
                 {% endif %}
             </div>
         </div>
+   --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         <div class="row">
             <div class="col-sm-12 mt-5">
-                <h3 class="text-center">Past Orders</h3>
+                <h3 class="text-center">Proceccing Orders</h3>
+                {% if processed_item %}
+                <div class="table-responsive">
+                    <table class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Ordered</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Total Pieces</th>
+                            <th scope="col">Order Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item_active in processed_item %}
+                        <tr>
+                            <td>{{ item_active.ordered_date }}</td>
+                            <td>{{ item_active.item.food_title}} <span class="badge badge-{{ item_active.item.label_colour }}">{{ item_active.item.labels }}</span></td>
+                            <td>{{ item_active.item.food_price }}</td>
+                            <td>{{ item_active.item.serving_quantity }} pieces</td>
+                            <td>{{ item_active.status }}</td>
+                        </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <h4 class="text-center">Sorry, you have no any item in processing!!!</h4>
+                {% endif %}
+            </div>
+        </div>
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        <div class="row">
+            <div class="col-sm-12 mt-5">
+                <h3 class="text-center">Delivered Orders</h3>
                 {% if cart_items %}
                 <div class="table-responsive">
                     <table class="table table-light">
@@ -46,8 +82,6 @@
                         <tr>
                             <th scope="col">Ordered</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-
                             <th scope="col">Price</th>
                             <th scope="col">Total Pieces</th>
                             <th scope="col">Order Status</th>
@@ -59,8 +93,6 @@
                         <tr>
                             <td>{{ cart.ordered_date }}</td>
                             <td>{{ cart.item.food_title }} <span class="badge badge-{{ cart.item.label_colour }}">{{ cart.item.labels }}</span></td>
-                            <td>{{ cart.item.food_description }}</td>
-
                             <td>{{ cart.item.food_price }}</td>
                             <td>{{ cart.quantity }} pieces</td>
                             <td>{{ cart.status }}</td>
@@ -77,3 +109,4 @@
         </div>
     </div>
 </div>
+{% endblock %}

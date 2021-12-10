@@ -1,0 +1,45 @@
+@media (max-width: 991px) {
+  .navigation-wrap .navber-brand img {
+    height: 3.8125px;
+  }
+  .navigation-wrap {
+    text-align: center;
+    background-color: #fff;
+  }
+  .navigation-wrap .nav-link {
+    height: 1.875px;
+    color: #333;
+  }
+  .top-banner {
+    padding: 9.375rem 0 9.375rem;
+  }
+  .testimonial-section .carousel-caption img {
+    text-align: center;
+    max-height: 80px;
+    max-width: 80px;
+    border-radius: 50px;
+    padding: 0.3125rem;
+    margin-left: 7.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .testimonial-section .carousel-caption p {
+    padding: 0;
+  }
+  .footer .footer-social a i {
+    padding: 0 0.75rem;
+  }
+}
+@media (max-width: 767px) {
+  h1 {
+    font-size: 2.8rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+    line-height: 28px;
+  }
+  .top-banner {
+    padding: 10.375rem 0 9.375rem;
+  }
+}
+@media (max-width: 330px) {
+}

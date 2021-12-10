@@ -9,6 +9,8 @@ from .models import OrderList
 from django.urls import reverse
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
+from customer.models import Customer_feedback
+
 
 # Create your views here.
 
@@ -160,6 +162,14 @@ def order_confirm(request, id):
         order_status.update(status='Processing')
 
     return HttpResponseRedirect(reverse('manager:order_foods'))
+
+
+def feedback_view(request):
+    feed = Customer_feedback.objects.all().order_by('id').reverse()
+    context = {
+        'feedbacks': feed
+    }
+    return render(request, 'manager/feedback.html', context)
 
 
 '''def manager_login(request):
