@@ -24,7 +24,7 @@
             <td class="cell">{{order.total}}</td>
             <td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'manager:order-confirm' order.id %}">Confirm</a></td>
             <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-            <td class="cell"><a class="btn-sm btn-danger" href="#">Delete</a></td>
+            <td class="cell"><a class="btn-sm btn-danger" href="{% url 'manager:delete_order' order.id%}">Delete</a></td>
         </tr>
     {% endfor %}
     {% else %}

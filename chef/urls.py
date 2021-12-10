@@ -13,7 +13,8 @@ urlpatterns = [
     path('all', views.all_order, name='all_order'),
     path('delivered', views.delivered_order, name='delivered'),
     path('active', views.active_order, name='active'),
-    path('food-list', FoodlistView.as_view(), name='food_list')
+    path('food-list', FoodlistView.as_view(), name='food_list'),
+
 
 ]
 '''def check():

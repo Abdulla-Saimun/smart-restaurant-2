@@ -150,13 +150,9 @@ def order_food_by_customer(request):
 
 @login_required
 def order_details_by_customer(request):
-    context = dict()
+    context = {}
     try:
         items_active = CartItems.objects.filter(user=request.user, ordered=True, status="Active").order_by(
-            '-ordered_date')
-        cart_items_delivered = CartItems.objects.filter(user=request.user, ordered=True, status="Delivered").order_by(
-            '-ordered_date')
-        cart_items_processed = CartItems.objects.filter(user=request.user, ordered=True, status="Processing").order_by(
             '-ordered_date')
         bill = items_active.aggregate(Sum('item__food_price'))
         number = items_active.aggregate(Sum('quantity'))
@@ -190,19 +186,30 @@ def order_details_by_customer(request):
             print('else executed')
 
         context = {
-            'items': items_active,
-            'cart_items': cart_items_delivered,
+            'active': items_active,
+            'deliver': '',
             'total': total,
             'count': count,
             'total_pieces': total_pieces,
-            'processed_item': cart_items_processed
+            'process': ''
         }
-        return render(request, 'customer/order_detail.html', context)
     except:
-        context = {
-            'msg': 'there is no data found'
-        }
-        return render(request, 'customer/order_detail.html', context)
+        pass
+
+    try:
+        cart_items_delivered = CartItems.objects.filter(user=request.user, ordered=True, status="Delivered").order_by(
+            '-ordered_date')
+        context.update({'deliver': cart_items_delivered})
+    except:
+        pass
+
+    try:
+        cart_items_processed = CartItems.objects.filter(user=request.user, ordered=True, status="Processing").order_by(
+            '-ordered_date')
+        context.update({'process': cart_items_processed})
+    except:
+        pass
+    return render(request, 'customer/order_detail.html', context)
 
 
 def customer_feedback(request):
@@ -214,7 +221,6 @@ def customer_feedback(request):
             feedback = Customer_feedback.objects.create(content=contentbody, date=date, customer=user)
             feedback.save()
         return HttpResponseRedirect(reverse('customer:customer_dashboard'))
-
 
 
 '''def registration(request):

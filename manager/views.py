@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import manager_account_form, manager_login_raw_form
 from .models import manager_account
 from django.contrib.auth.hashers import check_password
-from django.contrib import messages
 from food.models import food_item
 from customer.models import CartItems
 from .models import OrderList
@@ -74,7 +73,6 @@ def manager_login(request):
                 # return render(request, 'manager/manager_dashboard.html', context)
                 return HttpResponseRedirect(reverse('manager:manager_overview'))
             else:
-                messages.success(request, "Invalid credential! Try again..")
                 print('login failed')
                 context = {
                     'msg': 'failed and try again'
@@ -158,7 +156,11 @@ def manager_overview(request):
         active_order = OrderList.objects.filter(status='Active').count()
         in_process = total_amouont.count()
         x = total_amouont.aggregate(Sum('total'))
-        total = x.get('total__sum')
+        total_process = x.get('total__sum')
+        t_del = OrderList.objects.filter(status='Delivered')
+        y= t_del.aggregate(Sum('total'))
+        total_delivered = y.get('total__sum')
+        total = total_process+total_delivered
         print(total)
         context = {
             'total_item': query_quantity,
@@ -201,6 +203,28 @@ def feedback_view(request):
         return render(request, 'manager/feedback.html', context)
     else:
         return HttpResponseRedirect(reverse('manager:manager_login'))
+
+
+def delete_order(request, id):
+    ses = request.session.has_key('man_userid')
+    if ses:
+        get_order = OrderList.objects.get(id=id)
+        get_cart_ids = get_order.product_id
+        print(get_cart_ids)
+        for i in get_cart_ids:
+            x = int(i)
+            print(x)
+            cartid = CartItems.objects.get(id=x)
+            if cartid:
+                cartid.delete()
+        x = OrderList.objects.get(id=id)
+        x.delete()
+        return HttpResponseRedirect(reverse('manager:order_foods'))
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
+
+
+
 
 
 '''def manager_login(request):
