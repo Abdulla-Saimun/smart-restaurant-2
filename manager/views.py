@@ -115,7 +115,7 @@ def order_foods(request):
 def processing_order(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        queryset = OrderList.objects.filter(status='Processing').order_by('id')
+        queryset = OrderList.objects.filter(status='Processing').order_by('id').reverse()
         context = {
             'orders': queryset
         }
@@ -127,7 +127,7 @@ def processing_order(request):
 def delivered_order(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        queryset = OrderList.objects.filter(status='Delivered').order_by('id')
+        queryset = OrderList.objects.filter(status='Delivered').order_by('id').reverse()
         context = {
             'orders': queryset
         }
@@ -139,7 +139,7 @@ def delivered_order(request):
 def all_order(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        queryset = OrderList.objects.all().order_by('id')
+        queryset = OrderList.objects.all().order_by('id').reverse()
         context = {
             'orders': queryset
         }
