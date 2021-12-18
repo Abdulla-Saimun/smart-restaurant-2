@@ -31,7 +31,7 @@
 												<td class="cell">৳{{object.food_price}}</td>
 												<td class="cell">{{object.food_catagory}}</td>
 												<td class="cell">{{object.serving_quantity}}</td>
-												<td class="cell"><a class="btn-sm app-btn-secondary" href="#">Home</a></td>
+												<td class="cell"><a class="btn-sm app-btn-secondary" href="{% url 'customer:explore' %}">Home</a></td>
 											</tr>
 										</tbody>
 									</table>
@@ -41,7 +41,7 @@
 									<img src="{{object.image.url}}" alt="nothing" width="300" height="300">
 					</div>
 					<div>
-						<a class="btn-sm app-btn-secondary" href="#">Back to Home</a>
+						<a class="btn-sm app-btn-secondary" href="{% url 'customer:explore' %}">Back to Home</a>
 					</div>
 			    </div><!--//row-->
 	         </div><!--//app-content-->

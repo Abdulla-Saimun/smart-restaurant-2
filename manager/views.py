@@ -103,11 +103,15 @@ def manager_logout(request):
 def order_foods(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        queryset = OrderList.objects.filter(status='Active').order_by('id')
-        context = {
-            'orders': queryset
-        }
-        return render(request, 'manager/order.html', context)
+        try:
+            queryset = OrderList.objects.filter(status='Active').order_by('id')
+            context = {
+                'orders': queryset
+            }
+            return render(request, 'manager/order.html', context)
+        except:
+            return render(request, 'manager/order.html')
+
     else:
         return HttpResponseRedirect(reverse('manager:manager_login'))
 
@@ -115,11 +119,15 @@ def order_foods(request):
 def processing_order(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        queryset = OrderList.objects.filter(status='Processing').order_by('id').reverse()
-        context = {
-            'orders': queryset
-        }
-        return render(request, 'manager/processing_order.html', context)
+        try:
+            queryset = OrderList.objects.filter(status='Processing').order_by('id').reverse()
+            context = {
+                'orders': queryset
+            }
+            return render(request, 'manager/processing_order.html', context)
+        except:
+            return render(request, 'manager/processing_order.html')
+
     else:
         return HttpResponseRedirect(reverse('manager:manager_login'))
 
@@ -127,11 +135,15 @@ def processing_order(request):
 def delivered_order(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        queryset = OrderList.objects.filter(status='Delivered').order_by('id').reverse()
-        context = {
-            'orders': queryset
-        }
-        return render(request, 'manager/delivered_order.html', context)
+        try:
+            queryset = OrderList.objects.filter(status='Delivered').order_by('id').reverse()
+            context = {
+                'orders': queryset
+            }
+            return render(request, 'manager/delivered_order.html', context)
+        except:
+            return render(request, 'manager/delivered_order.html')
+
     else:
         return HttpResponseRedirect(reverse('manager:manager_login'))
 
@@ -139,11 +151,15 @@ def delivered_order(request):
 def all_order(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        queryset = OrderList.objects.all().order_by('id').reverse()
-        context = {
-            'orders': queryset
-        }
-        return render(request, 'manager/all_order.html', context)
+        try:
+            queryset = OrderList.objects.all().order_by('id').reverse()
+            context = {
+                'orders': queryset
+            }
+            return render(request, 'manager/all_order.html', context)
+        except:
+            return render(request, 'manager/all_order.html')
+
     else:
         return HttpResponseRedirect(reverse('manager:manager_login'))
 
@@ -151,24 +167,28 @@ def all_order(request):
 def manager_overview(request):
     ses = request.session.has_key('man_userid')
     if ses:
-        query_quantity = food_item.objects.all().count()
-        total_amouont = OrderList.objects.filter(status='Processing')
-        active_order = OrderList.objects.filter(status='Active').count()
-        in_process = total_amouont.count()
-        x = total_amouont.aggregate(Sum('total'))
-        total_process = x.get('total__sum')
-        t_del = OrderList.objects.filter(status='Delivered')
-        y= t_del.aggregate(Sum('total'))
-        total_delivered = y.get('total__sum')
-        total = total_process+total_delivered
-        print(total)
-        context = {
-            'total_item': query_quantity,
-            'total_amount': total,
-            'active_order': active_order,
-            'in_process': in_process
-        }
-        return render(request, 'manager/manager_dashboard.html', context)
+        try:
+            query_quantity = food_item.objects.all().count()
+            total_amouont = OrderList.objects.filter(status='Processing')
+            active_order = OrderList.objects.filter(status='Active').count()
+            in_process = total_amouont.count()
+            x = total_amouont.aggregate(Sum('total'))
+            total_process = x.get('total__sum')
+            t_del = OrderList.objects.filter(status='Delivered')
+            y = t_del.aggregate(Sum('total'))
+            total_delivered = y.get('total__sum')
+            total = total_process + total_delivered
+            print(total)
+            context = {
+                'total_item': query_quantity,
+                'total_amount': total,
+                'active_order': active_order,
+                'in_process': in_process
+            }
+            return render(request, 'manager/manager_dashboard.html', context)
+        except:
+            pass
+
     else:
         return HttpResponseRedirect(reverse('manager:manager_login'))
 
@@ -222,9 +242,6 @@ def delete_order(request, id):
         return HttpResponseRedirect(reverse('manager:order_foods'))
     else:
         return HttpResponseRedirect(reverse('manager:manager_login'))
-
-
-
 
 
 '''def manager_login(request):
