@@ -6,12 +6,12 @@
       <div class="col-6 col-sm-2 mb-4 mb-lg-0">
         <div class="card">
           <div class="cat-image">
-            <a href="#" class="link_category_product">
-              <img src="{% static './images/img/category1.png' %}" alt="" />
+            <a href="{% url 'customer:explore' %}" class="link_category_product">
+              <img src="{% static './images/img/all.jpg' %}" alt="default" />
             </a>
           </div>
           <div class="cat-title">
-            <a href="">pizza</a>
+            <a href="{% url 'customer:explore' %}">All</a>
           </div>
         </div>
       </div>
@@ -19,60 +19,73 @@
       <div class="col-6 col-sm-2 mb-4 mb-lg-0">
         <div class="card">
           <div class="cat-image">
-            <a href="#" class="link_category_product">
-              <img src="{% static './images/img/category2.png' %}" alt="" />
+            <a href="{% url 'customer:pizza' %}" class="link_category_product">
+              <img src="{% static './images/img/category1.png' %}" alt="" />
             </a>
           </div>
           <div class="cat-title">
-            <a href="">Souces</a>
+            <a href="{% url 'customer:pizza' %}">pizza</a>
           </div>
         </div>
       </div>
+
       <div class="col-6 col-sm-2 mb-4 mb-lg-0">
         <div class="card">
           <div class="cat-image">
-            <a href="#" class="link_category_product">
+            <a href="{% url 'customer:burger' %}" class="link_category_product">
               <img src="{% static './images/img/category3.png' %}" alt="" />
             </a>
           </div>
           <div class="cat-title">
-            <a href="">Kombo</a>
+            <a href="{% url 'customer:burger' %}">Burger</a>
           </div>
         </div>
       </div>
       <div class="col-6 col-sm-2 mb-4 mb-lg-0">
         <div class="card">
           <div class="cat-image">
-            <a href="#" class="link_category_product">
+            <a href="{% url 'customer:fry' %}" class="link_category_product">
               <img src="{% static './images/img/category4.png' %}" alt="" />
             </a>
           </div>
           <div class="cat-title">
-            <a href="">Kids menu</a>
+            <a href="{% url 'customer:fry' %}">Fry</a>
           </div>
         </div>
       </div>
       <div class="col-6 col-sm-2 mb-4 mb-lg-0">
         <div class="card">
           <div class="cat-image">
-            <a href="#" class="link_category_product">
+            <a href="{% url 'customer:drinks' %}" class="link_category_product">
+              <img src="{% static './images/img/softdrinks.jpg' %}" alt="" />
+            </a>
+          </div>
+          <div class="cat-title">
+            <a href="{% url 'customer:drinks' %}">Drinks</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-2 mb-4 mb-lg-0">
+        <div class="card">
+          <div class="cat-image">
+            <a href="{% url 'customer:chicken' %}" class="link_category_product">
               <img src="{% static './images/img/category5.png' %}" alt="" />
             </a>
           </div>
           <div class="cat-title">
-            <a href="">Chicken</a>
+            <a href="{% url 'customer:chicken' %}">Chicken</a>
           </div>
         </div>
       </div>
       <div class="col-6 col-sm-2 mb-4 mb-lg-0">
         <div class="card">
           <div class="cat-image">
-            <a href="#" class="link_category_product">
-              <img src="{% static './images/img/category6.png' %}" alt="" />
+            <a href="{% url 'customer:sandwich' %}" class="link_category_product">
+              <img src="{% static './images/img/sand.png' %}" alt="" />
             </a>
           </div>
           <div class="cat-title">
-            <a href="">Box meal</a>
+            <a href="{% url 'customer:sandwich' %}">Sandwich</a>
           </div>
         </div>
       </div>
@@ -82,6 +95,7 @@
 {% endblock %} {% block content %} {% load static %}
 
 <div class="container d-flex align-items-start flex-wrap">
+  {% if items %}
   {% for item in items %}
   <div class="card m-2" style="width: 18rem">
     <img class="card-img-top" src="{{item.image.url}}" alt="Card image cap" />
@@ -112,5 +126,8 @@
     </div>
   </div>
   {% endfor %}
+  {% else %}
+  <p style="color:red">there is no item like this</p>
+  {% endif %}
 </div>
 {% endblock %}

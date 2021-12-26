@@ -16,6 +16,12 @@ urlpatterns = [
     path('remove-from-cart/<int:pk>/', CartDeleteView.as_view(), name='remove-from-cart'),
     path('ordered/', views.order_food_by_customer, name='order_food'),
     path('order-detail/', views.order_details_by_customer, name='order_details'),
-    path('feedback', views.customer_feedback, name='feedback')
+    path('feedback', views.customer_feedback, name='feedback'),
+    path('pizza', views.sort_by_pizza, name='pizza'),
+    path('burger', views.sort_by_burger, name='burger'),
+    path('chicken', views.sort_by_chicken, name='chicken'),
+    path('drinks', views.sort_by_drinks, name='drinks'),
+    path('sandwich', views.sort_by_sandwich, name='sandwich'),
+    path('fry', views.sort_by_fry, name='fry'),
 
 ]

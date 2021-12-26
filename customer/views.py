@@ -223,6 +223,72 @@ def customer_feedback(request):
         return HttpResponseRedirect(reverse('customer:customer_dashboard'))
 
 
+def sort_by_pizza(request):
+    try:
+        pizzas = food_item.objects.filter(food_catagory='Pizza')
+        context = {
+            'items': pizzas
+        }
+        return render(request, 'customer/explorefood.html', context)
+    except:
+        return HttpResponseRedirect(reverse('customer:explore'))
+
+
+def sort_by_burger(request):
+    try:
+        pizzas = food_item.objects.filter(food_catagory='Burger')
+        context = {
+            'items': pizzas
+        }
+        return render(request, 'customer/explorefood.html', context)
+    except:
+        return HttpResponseRedirect(reverse('customer:explore'))
+
+
+def sort_by_chicken(request):
+    try:
+        pizzas = food_item.objects.filter(food_catagory='Chicken')
+        context = {
+            'items': pizzas
+        }
+        return render(request, 'customer/explorefood.html', context)
+    except:
+        return HttpResponseRedirect(reverse('customer:explore'))
+
+
+def sort_by_drinks(request):
+    try:
+        pizzas = food_item.objects.filter(food_catagory='Drinks')
+        context = {
+            'items': pizzas
+        }
+        return render(request, 'customer/explorefood.html', context)
+    except:
+        return HttpResponseRedirect(reverse('customer:explore'))
+
+
+def sort_by_sandwich(request):
+    try:
+        pizzas = food_item.objects.filter(food_catagory='Sandwich')
+        context = {
+            'items': pizzas
+        }
+        return render(request, 'customer/explorefood.html', context)
+    except:
+        return HttpResponseRedirect(reverse('customer:explore'))
+
+
+def sort_by_fry(request):
+    try:
+        pizzas = food_item.objects.filter(food_catagory='Fry')
+        context = {
+            'items': pizzas
+        }
+        return render(request, 'customer/explorefood.html', context)
+    except:
+        return HttpResponseRedirect(reverse('customer:explore'))
+
+
 '''def registration(request):
     form = customer_account_form()
     context = {
