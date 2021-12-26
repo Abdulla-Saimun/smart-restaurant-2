@@ -244,6 +244,19 @@ def delete_order(request, id):
         return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
+def delete_feedback(request, id):
+    ses = request.session.has_key('man_userid')
+    if ses:
+        try:
+            getFeed = Customer_feedback.objects.get(id=id)
+            getFeed.delete()
+        except:
+            return HttpResponseRedirect(reverse('manager:feedback'))
+        return HttpResponseRedirect(reverse('manager:feedback'))
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
+
+
 '''def manager_login(request):
     if request.POST:
         user_id = request.POST['signin-user']

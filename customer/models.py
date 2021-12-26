@@ -46,6 +46,10 @@ class Customer_feedback(models.Model):
     def __str__(self):
         return self.content
 
+    def delete_feed(self):
+        return reverse('manager:delete-feedback', kwargs={'pk': self.pk})
+
+
 '''
 # Create your models here.
 class customer_account(models.Model):

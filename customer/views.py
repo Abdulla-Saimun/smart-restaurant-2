@@ -144,7 +144,7 @@ def order_food_by_customer(request):
     cart_items = CartItems.objects.filter(user=request.user, ordered=False)
     ordered_date = timezone.now()
     cart_items.update(ordered=True, ordered_date=ordered_date)
-    messages.info(request, "Item Ordered")
+    #messages.info(request, "Item Ordered")
     return redirect("customer:order_details")
 
 
@@ -185,13 +185,18 @@ def order_details_by_customer(request):
             orderCreate.save()
             print('else executed')
 
+        orderId = OrderList.objects.get(products=product_list, customer=cust, date=timezone.now(),
+                                               total=total,
+                                               status='Active', product_id=cart_id_list)
+        print(orderId, 'salman')
         context = {
             'active': items_active,
             'deliver': '',
             'total': total,
             'count': count,
             'total_pieces': total_pieces,
-            'process': ''
+            'process': '',
+            'orderId': orderId,
         }
     except:
         pass

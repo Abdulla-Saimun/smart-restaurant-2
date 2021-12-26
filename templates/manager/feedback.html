@@ -33,6 +33,7 @@
                                                 <td class="cell"><span class="truncate">{{feedback.content}}</span></td>
                                                 <td class="cell">{{feedback.customer}}</td>
                                                 <td class="cell"><span>{{feedback.date}}</span></td>
+												<td class="cell"><a class="btn-sm btn-danger" href="{% url 'manager:delete-feedback' feedback.id%}">Delete</a></td>
                                             </tr>
                                         {% endfor %}
                                         {% else %}
