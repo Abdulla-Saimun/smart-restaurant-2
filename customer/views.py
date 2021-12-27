@@ -90,7 +90,7 @@ class CusFoodDetailView(DetailView):
         return get_object_or_404(food_item, id=id_)
 
 
-@login_required
+@login_required(login_url='/login')
 def add_to_cart(request, pk):
     item = get_object_or_404(food_item, pk=pk)
     cart_item = CartItems.objects.create(
@@ -98,13 +98,13 @@ def add_to_cart(request, pk):
         user=request.user,
         ordered=False,
     )
-    messages.info(request, "Added to Cart Successfully!!Continue Shopping!!")
+    # messages.info(request, "Added to Cart Successfully!!Continue Shopping!!")
     return HttpResponseRedirect(reverse('customer:cart'))
 
     # return reverse('customer:cart', kwargs={'pk': pk})
 
 
-@login_required
+@login_required(login_url='/login')
 def get_cart_items(request):
     cart_items = CartItems.objects.filter(user=request.user, ordered=False)
     total_item = cart_items.count()
@@ -139,16 +139,16 @@ class CartDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-@login_required
+@login_required(login_url='/login')
 def order_food_by_customer(request):
     cart_items = CartItems.objects.filter(user=request.user, ordered=False)
     ordered_date = timezone.now()
     cart_items.update(ordered=True, ordered_date=ordered_date)
-    #messages.info(request, "Item Ordered")
+    # messages.info(request, "Item Ordered")
     return redirect("customer:order_details")
 
 
-@login_required
+@login_required(login_url='/login')
 def order_details_by_customer(request):
     context = {}
     try:
@@ -186,8 +186,8 @@ def order_details_by_customer(request):
             print('else executed')
 
         orderId = OrderList.objects.get(products=product_list, customer=cust, date=timezone.now(),
-                                               total=total,
-                                               status='Active', product_id=cart_id_list)
+                                        total=total,
+                                        status='Active', product_id=cart_id_list)
         print(orderId, 'salman')
         context = {
             'active': items_active,

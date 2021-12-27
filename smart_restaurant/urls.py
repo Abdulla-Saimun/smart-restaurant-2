@@ -24,7 +24,8 @@ urlpatterns = [
     path('', include('customer.urls', namespace='customer')),
     path('manager/', include('manager.urls')),
     path('food/', include('food.urls')),
-    path('chef/', include('chef.urls', namespace='chef'))
+    path('chef/', include('chef.urls', namespace='chef')),
+    path('api/', include('api.urls', namespace='api')),
 
 
 ]

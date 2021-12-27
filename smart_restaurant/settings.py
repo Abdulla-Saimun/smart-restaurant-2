@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'manager.apps.ManagerConfig',
     'food.apps.FoodConfig',
     'crispy_forms',
+    'api',
+    'rest_framework',
 
 
 ]
