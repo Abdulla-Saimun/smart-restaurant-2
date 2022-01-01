@@ -32,25 +32,33 @@
 
 <table id="customers">
   <tr>
-    <th>id</th>
+    <th>Id</th>
     <th>Products</th>
     <th>Products Id</th>
       <th>Customer</th>
-      <th>date</th>
-      <th>total</th>
+      <th>Date</th>
+      <th>Total</th>
   </tr>
  {% for report in reports %}
-    <tr>
+<tr>
     <td>{{report.id}}</td>
     <td>{{report.products}}</td>
     <td>{{report.product_id}}</td>
     <td>{{report.customer}}</td>
-        <td>{{report.date}}</td>
-        <td>{{report.total}}</td>
+    <td>{{report.date}}</td>
+    <td>{{report.total}}</td>
+</tr>
 
-  </tr>
+
     {% endfor %}
-
+<tr>
+    <td>.</td>
+    <td>.</td>
+    <td>.</td>
+    <td>.</td>
+    <td ><b>Grand Total=</b></td>
+    <td><b>{{total}}</b></td>
+</tr>
 </table>
 
 </body>

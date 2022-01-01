@@ -358,7 +358,6 @@ def render_to_pdf(template_src, context_dict={}):
     return None
 
 
-
 def view_report(request):
     if request.method == 'POST':
         txt = request.POST['date']
@@ -384,17 +383,19 @@ def view_report(request):
         day = firtsSplit[1]
         dateValue = year + '-' + month + '-' + day
         print(dateValue)
+        filterbydate = OrderList.objects.filter(date=dateValue)
+        tt = filterbydate.aggregate(Sum('total'))
+        grand_total = tt.get('total__sum')
+        print(tt)
         context = {
-            'reports': OrderList.objects.filter(date=dateValue),
+            'reports': filterbydate,
             'dte': txt,
+            'total': grand_total,
         }
         pdf = render_to_pdf('manager/manager_pdf_template.html', context)
         return HttpResponse(pdf, content_type='application/pdf')
 
     return HttpResponseRedirect(reverse('manager:report-home'))
-
-
-
 
 
 def generate_reportbyhtml(request):
