@@ -283,7 +283,7 @@ def report_page(request):
         dateList.append(i.date)
 
     dateList = list(dict.fromkeys(dateList))
-    dateList.sort()
+    dateList.sort(reverse=True)
     context = {
         'dates': dateList
     }
