@@ -257,6 +257,56 @@ def delete_feedback(request, id):
         return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
+def report_page(request):
+    x = OrderList.objects.all()
+    dateList = []
+    for i in x:
+        dateList.append(i.date)
+
+    dateList = list(dict.fromkeys(dateList))
+    dateList.sort()
+    context = {
+        'dates': dateList
+    }
+    return render(request, 'manager/reporthome.html', context)
+
+
+def search_report(request):
+    if request.method == 'POST':
+        txt = request.POST['date']
+        monthDictionary = {
+            'Jan': "01",
+            'Feb': "02",
+            'Mar': "03",
+            'Apr': "04",
+            'May': "05",
+            'Jum': "06",
+            'Jul': "07",
+            'Aug': "08",
+            'Sep': "09",
+            'Oct': "10",
+            'Nov': "11",
+            'Dec': "12"
+        }
+        "YYYY-MM-DD"
+        x = txt.split(", ")
+        first = x[0]
+        year = x[1]
+        firtsSplit = first.split(". ")
+        month = monthDictionary[firtsSplit[0]]
+        day = firtsSplit[1]
+        dateValue = year+'-'+month+'-'+day
+        print(dateValue)
+        print('saimun')
+        filterbydate = OrderList.objects.filter(date=str(dateValue))
+        print(filterbydate.count())
+        if filterbydate:
+            print(filterbydate)
+        else:
+            print('no item found')
+    return render(request, 'manager/reporthome.html')
+
+
 '''def manager_login(request):
     if request.POST:
         user_id = request.POST['signin-user']

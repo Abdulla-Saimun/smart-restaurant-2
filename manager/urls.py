@@ -16,5 +16,7 @@ urlpatterns = [
     path('feedback', views.feedback_view, name='feedback'),
     path('order-delete/<int:id>', views.delete_order, name='delete_order'),
     path('feedback-delete/<int:id>', views.delete_feedback, name='delete-feedback'),
+    path('report-home', views.report_page, name='report-home'),
+    path('search-report', views.search_report, name='search-report'),
 
 ]
