@@ -17,6 +17,9 @@ urlpatterns = [
     path('order-delete/<int:id>', views.delete_order, name='delete_order'),
     path('feedback-delete/<int:id>', views.delete_feedback, name='delete-feedback'),
     path('report-home', views.report_page, name='report-home'),
-    path('search-report', views.search_report, name='search-report'),
+    #path('search-report', views.search_report, name='search-report'),
+    #path('report-generate', views.generate_reportbyhtml, name='report-generate'),
+    path('report-view', views.view_report, name='pdf-view'),
+
 
 ]

@@ -11,13 +11,13 @@
 				    </div>
 			    </div><!--//row-->
                      <div style="text-align:center;">
-                        <form action="{% url 'manager:search-report' %}" method='POST' >{% csrf_token %}
+                        <form action="{% url 'manager:pdf-view' %}" method='POST' >{% csrf_token %}
                             <select name="date" id="date">
                                 {% for date in dates %}
                                 <option value="{{date}}">{{date}}</option>
                                  {% endfor %}
                             </select>
-                            <input type='submit' value='Search' />
+                            <input type='submit' value='Generate PDF' />
                         </form>
                     </div>
                 {% for date in dates %}

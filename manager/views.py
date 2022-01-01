@@ -7,10 +7,29 @@ from customer.models import CartItems
 from .models import OrderList
 from django.urls import reverse
 from django.db.models import Sum
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, FileResponse, HttpResponse
 from customer.models import Customer_feedback
+from django.views import View
+
+# reportlab
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+from io import BytesIO
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus import Table
+
+# html to pdf
+from io import StringIO
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.template import Context
+from fpdf import FPDF
+#
+from django_xhtml2pdf.utils import generate_pdf
 
 
+# from cgi import escape
 # Create your views here.
 
 def manager_registration(request):
@@ -295,7 +314,7 @@ def search_report(request):
         firtsSplit = first.split(". ")
         month = monthDictionary[firtsSplit[0]]
         day = firtsSplit[1]
-        dateValue = year+'-'+month+'-'+day
+        dateValue = year + '-' + month + '-' + day
         print(dateValue)
         print('saimun')
         filterbydate = OrderList.objects.filter(date=str(dateValue))
@@ -306,6 +325,131 @@ def search_report(request):
             print('no item found')
     return render(request, 'manager/reporthome.html')
 
+
+def generate_report_by_reportLab(request):
+    buf = BytesIO()
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    textobj = c.beginText()
+    textobj.setTextOrigin(inch, inch)
+    textobj.setFont('Helvetica', 14)
+    lines = [
+        'this is line one',
+        'this is  line  two',
+        'this is line three'
+    ]
+    for line in lines:
+        textobj.textLine(line)
+
+    c.drawText(textobj)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+
+    return FileResponse(buf, as_attachment=True, filename='report.pdf')
+
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+
+def view_report(request):
+    if request.method == 'POST':
+        txt = request.POST['date']
+        monthDictionary = {
+            'Jan': "01",
+            'Feb': "02",
+            'Mar': "03",
+            'Apr': "04",
+            'May': "05",
+            'Jum': "06",
+            'Jul': "07",
+            'Aug': "08",
+            'Sep': "09",
+            'Oct': "10",
+            'Nov': "11",
+            'Dec': "12"
+        }
+        x = txt.split(", ")
+        first = x[0]
+        year = x[1]
+        firtsSplit = first.split(". ")
+        month = monthDictionary[firtsSplit[0]]
+        day = firtsSplit[1]
+        dateValue = year + '-' + month + '-' + day
+        print(dateValue)
+        context = {
+            'reports': OrderList.objects.filter(date=dateValue),
+            'dte': txt,
+        }
+        pdf = render_to_pdf('manager/manager_pdf_template.html', context)
+        return HttpResponse(pdf, content_type='application/pdf')
+
+    return HttpResponseRedirect(reverse('manager:report-home'))
+
+
+
+
+
+def generate_reportbyhtml(request):
+    results = OrderList.objects.all()
+
+    resdict = dict({
+        'pagesize': 'A4',
+        'mylist': results,
+    })
+    return render_to_pdf(
+        'manager/manager_pdf_template.html',
+        resdict
+    )
+
+
+def pdf_check(request):
+    main_list = list()
+    filterdate = OrderList.objects.filter(date='2021-12-8')
+    if filterdate:
+        for date in filterdate:
+            nsdict = dict()
+            nsdict['id'] = str(date.id)
+            nsdict['products'] = date.products
+            nsdict['customer'] = date.customer
+            nsdict['date'] = date.date
+            nsdict['total'] = date.total
+            main_list.append(nsdict)
+        print(main_list)
+    sales = [
+        {"item": "Keyboard", "amount": "$120,00"},
+        {"item": "Mouse", "amount": "$10,00"},
+        {"item": "House", "amount": "$1 000 000,00"},
+    ]
+    pdf = FPDF('P', 'mm', 'A4')
+    pdf.add_page()
+    pdf.set_font('courier', 'B', 16)
+    pdf.cell(40, 10, 'Report:', 0, 1)
+    pdf.cell(40, 10, '', 0, 1)
+    pdf.set_font('courier', '', 12)
+    pdf.cell(200, 8,
+             f"{'Id'.ljust(5)} {'Product'.rjust(10)} {'Customer'.rjust(20)}{'date'.rjust(10)}{'total'.rjust(10)}", 0, 1)
+    pdf.line(10, 30, 150, 30)
+    pdf.line(10, 38, 150, 38)
+    for line in main_list:
+        pdf.cell(200, 8, f"{line['id'].ljust(5)} {line['products']} {line['customer']} {line['date']} {line['total']}",
+                 0, 1)
+    pdf.output('report.pdf', 'F')
+    return FileResponse(open('report.pdf', 'rb'), as_attachment=True, content_type='application/pdf')
+
+
+'''
+def pdf_check(response):
+    resp = HttpResponse(content_type='application/pdf')
+    result = generate_pdf('manager/manager_pdf_template.html', file_object=resp)
+    return result '''
 
 '''def manager_login(request):
     if request.POST:
