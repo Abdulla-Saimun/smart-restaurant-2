@@ -27,8 +27,8 @@
 </style>
 </head>
 <body>
-
-<h1>Report date is {{dte}}</h1>
+ {% if reports %}
+<h1>Report for {{dte}}</h1>
 
 <table id="customers">
   <tr>
@@ -60,7 +60,9 @@
     <td><b>{{total}}</b></td>
 </tr>
 </table>
-
+{% else %}
+<p>No item found</p>
+{% endif %}
 </body>
 </html>
 

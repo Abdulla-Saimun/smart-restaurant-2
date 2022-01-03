@@ -11,11 +11,30 @@
 				    </div>
 			    </div><!--//row-->
                      <div style="text-align:center;">
+                         <h1 class="app-page-title mb-0">Report by Date</h1>
                         <form action="{% url 'manager:pdf-view' %}" method='POST' >{% csrf_token %}
                             <select name="date" id="date">
                                 {% for date in dates %}
                                 <option value="{{date}}">{{date}}</option>
                                  {% endfor %}
+                            </select>
+                            <input type='submit' value='Generate PDF' />
+                        </form>
+                    </div>
+                <br>
+                <br>
+                <br>
+                    <div style="text-align:center;">
+                         <h1 class="app-page-title mb-0">Report by Month</h1>
+                        <form action="{% url 'manager:report-month' %}" method='POST' >{% csrf_token %}
+                            <select name="date" id="date">
+                                {% for month in months %}
+                                <option value="{{month}}">{{month}}</option>
+                                 {% endfor %}
+                            </select>
+                            <select name="year" id="year">
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
                             </select>
                             <input type='submit' value='Generate PDF' />
                         </form>

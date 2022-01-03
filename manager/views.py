@@ -277,17 +277,38 @@ def delete_feedback(request, id):
 
 
 def report_page(request):
-    x = OrderList.objects.all()
-    dateList = []
-    for i in x:
-        dateList.append(i.date)
+    sesss = request.session.get('man_userid')
+    print('Hi {}'.format(sesss))
+    ses = request.session.has_key('man_userid')
+    if ses:
+        x = OrderList.objects.all()
+        dateList = []
+        for i in x:
+            dateList.append(i.date)
 
-    dateList = list(dict.fromkeys(dateList))
-    dateList.sort(reverse=True)
-    context = {
-        'dates': dateList
-    }
-    return render(request, 'manager/reporthome.html', context)
+        dateList = list(dict.fromkeys(dateList))
+        dateList.sort(reverse=True)
+        monthDictionary = {
+            'January': "01",
+            'February': "02",
+            'March': "03",
+            'April': "04",
+            'May': "05",
+            'Jun': "06",
+            'July': "07",
+            'August': "08",
+            'September': "09",
+            'October': "10",
+            'November': "11",
+            'December': "12"
+        }
+        context = {
+            'dates': dateList,
+            'months': monthDictionary,
+        }
+        return render(request, 'manager/reporthome.html', context)
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
 
 
 def search_report(request):
@@ -359,43 +380,102 @@ def render_to_pdf(template_src, context_dict={}):
 
 
 def view_report(request):
-    if request.method == 'POST':
-        txt = request.POST['date']
-        monthDictionary = {
-            'Jan': "01",
-            'Feb': "02",
-            'Mar': "03",
-            'Apr': "04",
-            'May': "05",
-            'Jum': "06",
-            'Jul': "07",
-            'Aug': "08",
-            'Sep': "09",
-            'Oct': "10",
-            'Nov': "11",
-            'Dec': "12"
-        }
-        x = txt.split(", ")
-        first = x[0]
-        year = x[1]
-        firtsSplit = first.split(". ")
-        month = monthDictionary[firtsSplit[0]]
-        day = firtsSplit[1]
-        dateValue = year + '-' + month + '-' + day
-        print(dateValue)
+    ses = request.session.has_key('man_userid')
+    if ses:
+        if request.method == 'POST':
+            txt = request.POST['date']
+            monthDictionary = {
+                'Jan': "01",
+                'Feb': "02",
+                'Mar': "03",
+                'Apr': "04",
+                'May': "05",
+                'Jum': "06",
+                'Jul': "07",
+                'Aug': "08",
+                'Sep': "09",
+                'Oct': "10",
+                'Nov': "11",
+                'Dec': "12"
+            }
+            x = txt.split(", ")
+            first = x[0]
+            year = x[1]
+            firtsSplit = first.split(". ")
+            month = monthDictionary[firtsSplit[0]]
+            day = firtsSplit[1]
+            dateValue = year + '-' + month + '-' + day
+            print(dateValue)
+            filterbydate = OrderList.objects.filter(date=dateValue)
+            tt = filterbydate.aggregate(Sum('total'))
+            grand_total = tt.get('total__sum')
+            print(tt)
+            context = {
+                'reports': filterbydate,
+                'dte': txt,
+                'total': grand_total,
+            }
+            pdf = render_to_pdf('manager/manager_pdf_template.html', context)
+            return HttpResponse(pdf, content_type='application/pdf')
+
+        return HttpResponseRedirect(reverse('manager:report-home'))
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
+
+
+def report_month(request):
+    ses = request.session.has_key('man_userid')
+    if ses:
+        if request.method == 'POST':
+            txt = request.POST['date']
+            year = int(request.POST['year'])
+            monthDictionary = {
+                'January': "01",
+                'February': "02",
+                'March': "03",
+                'April': "04",
+                'May': "05",
+                'Jun': "06",
+                'July': "07",
+                'August': "08",
+                'September': "09",
+                'October': "10",
+                'November': "11",
+                'December': "12"
+            }
+            month = str(monthDictionary[txt])
+            print(month)
+            filterbydate = OrderList.objects.filter(date__month=month, date__year=year).order_by('id')
+            if filterbydate:
+                tt = filterbydate.aggregate(Sum('total'))
+                grand_total = tt.get('total__sum')
+                print(tt)
+                context = {
+                    'reports': filterbydate,
+                    'dte': txt,
+                    'total': grand_total,
+                }
+                pdf = render_to_pdf('manager/manager_pdf_template.html', context)
+                return HttpResponse(pdf, content_type='application/pdf')
+
+        return HttpResponseRedirect(reverse('manager:report-home'))
+    else:
+        return HttpResponseRedirect(reverse('manager:manager_login'))
+
+
+class DownloadReportasPDF(View):
+    def get(self, request, rid, *args, **kwargs):
+        dateValue = '2021-12-08'
         filterbydate = OrderList.objects.filter(date=dateValue)
-        tt = filterbydate.aggregate(Sum('total'))
-        grand_total = tt.get('total__sum')
-        print(tt)
         context = {
             'reports': filterbydate,
-            'dte': txt,
-            'total': grand_total,
         }
-        pdf = render_to_pdf('manager/manager_pdf_template.html', context)
-        return HttpResponse(pdf, content_type='application/pdf')
-
-    return HttpResponseRedirect(reverse('manager:report-home'))
+        pdf = render_to_pdf('patient/report_pdf.html', context)
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Lab_Test_Report_%s.pdf"
+        content = "attachment; filename=%s" %(filename)
+        response['Content-Disposition'] = content
+        return response
 
 
 def generate_reportbyhtml(request):
