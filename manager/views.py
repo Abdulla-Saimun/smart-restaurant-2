@@ -281,13 +281,13 @@ def report_page(request):
     print('Hi {}'.format(sesss))
     ses = request.session.has_key('man_userid')
     if ses:
-        x = OrderList.objects.all()
-        dateList = []
-        for i in x:
-            dateList.append(i.date)
+        x = OrderList.objects.all().distinct('date')
 
-        dateList = list(dict.fromkeys(dateList))
-        dateList.sort(reverse=True)
+        nwlist = list()
+        for i in x:
+            nwlist.append(i.date)
+        nwlist.sort(reverse=True
+                    )
         monthDictionary = {
             'January': "01",
             'February': "02",
@@ -303,7 +303,7 @@ def report_page(request):
             'December': "12"
         }
         context = {
-            'dates': dateList,
+            'dates': nwlist,
             'months': monthDictionary,
         }
         return render(request, 'manager/reporthome.html', context)
@@ -347,7 +347,7 @@ def search_report(request):
     return render(request, 'manager/reporthome.html')
 
 
-def generate_report_by_reportLab(request):
+'''def generate_report_by_reportLab(request):
     buf = BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
     textobj = c.beginText()
@@ -366,7 +366,7 @@ def generate_report_by_reportLab(request):
     c.save()
     buf.seek(0)
 
-    return FileResponse(buf, as_attachment=True, filename='report.pdf')
+    return FileResponse(buf, as_attachment=True, filename='report.pdf')'''
 
 
 def render_to_pdf(template_src, context_dict={}):
