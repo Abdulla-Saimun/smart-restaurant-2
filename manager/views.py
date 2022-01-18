@@ -191,13 +191,19 @@ def manager_overview(request):
             total_amouont = OrderList.objects.filter(status='Processing')
             active_order = OrderList.objects.filter(status='Active').count()
             in_process = total_amouont.count()
-            x = total_amouont.aggregate(Sum('total'))
-            total_process = x.get('total__sum')
-            t_del = OrderList.objects.filter(status='Delivered')
-            y = t_del.aggregate(Sum('total'))
-            total_delivered = y.get('total__sum')
-            total = total_process + total_delivered
-            print(total)
+            print(type(in_process))
+            if in_process != 0:
+                x = total_amouont.aggregate(Sum('total'))
+                total_process = x.get('total__sum')
+                t_del = OrderList.objects.filter(status='Delivered')
+                y = t_del.aggregate(Sum('total'))
+                total_delivered = y.get('total__sum')
+                total = total_process + total_delivered
+                print(total)
+            else:
+                t_del = OrderList.objects.filter(status='Delivered')
+                y = t_del.aggregate(Sum('total'))
+                total = y.get('total__sum')
             context = {
                 'total_item': query_quantity,
                 'total_amount': total,
