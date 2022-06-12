@@ -1,3 +1,7 @@
-# smart-restaurant-2
-super user name: saimun
-password: saimun
+# smart-restaurant
+Smart-Restaurant’ is a system that helps a restaurant to handle customers, managers and chefs efficiently. We know that the restaurant business is one of the toughest businesses. So, restaurant owners always try to increase efficiency and customer satisfaction.  
+There are many restaurants that can’t handle their clients properly, which reduces customer satisfaction. Nowadays there are shortages of restaurant waiters which increases the difficulty of running a restaurant. Order delays always hamper and make a business unprofitable. ‘Smart-Restaurant’ system can overcome this problem. We are now living in a digital era. Almost every person has their smart phone or internet-enabled devices. ‘Smart-Restaurant’ work on any internet enabled devices. 
+Using this system, customers can view all items and order items in the system. Customer can provide their feedback and view previous feedback. They can view the order status and history of their own. 
+Manager overviews the all data in the system. He can add new products. If he wants, he can update, delete food items in the system. Manager confirm orders from customers and send those orders to the chefs. He can view all feedback in the system. Manager can also generate PDF reports. 
+Chefs receive order from manager and deliver them when ready. 
+This system reduces the order processing time which helps to increase profit. Automate the redundant work and increase efficiency. It is delivering a great customer experience and determining profits and costs. This system can reduce the communication gap between customer, manager, and chef. 
